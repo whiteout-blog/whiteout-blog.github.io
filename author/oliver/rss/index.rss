@@ -1,0 +1,319 @@
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" version="2.0"><channel><title>Oliver Gajek - Whiteout Networks</title><description>Our company was founded in 2013 in Munich. Our mission is to provide secure email that is easy to use and runs on all devices.</description><link>http://blog.whiteout.io/</link><generator>Ghost 0.7</generator><lastBuildDate>Mon, 04 Jan 2016 04:52:33 GMT</lastBuildDate><atom:link href="http://blog.whiteout.io/author/oliver/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title>End-of-Life for Whiteout Cloud Services: Action Required!</title><description>&lt;p&gt;Dear Whiteout user,&lt;/p&gt;
+
+&lt;p&gt;you haven't heard from us in a while. Some say that no news is good news. Not in this case. &lt;/p&gt;
+
+&lt;p&gt;When we set out with Whiteout Networks we wanted to create a viable business model in the area of encrypted email. That has not been successful. &lt;/p&gt;
+
+&lt;p&gt;Therefore&lt;/p&gt;</description><link>http://blog.whiteout.io/2015/11/30/end-of-life-for-whiteout-key-service-action-required/</link><guid isPermaLink="false">c0834398-78ed-4ff8-95a8-f29ad1e0bc51</guid><dc:creator>Oliver Gajek</dc:creator><pubDate>Mon, 30 Nov 2015 16:48:10 GMT</pubDate><content:encoded>&lt;p&gt;Dear Whiteout user,&lt;/p&gt;
+
+&lt;p&gt;you haven't heard from us in a while. Some say that no news is good news. Not in this case. &lt;/p&gt;
+
+&lt;p&gt;When we set out with Whiteout Networks we wanted to create a viable business model in the area of encrypted email. That has not been successful. &lt;/p&gt;
+
+&lt;p&gt;Therefore we have to declare "end of life" for our cloud services. If you are one of the many production users of Whiteout Mail you have to take action!&lt;/p&gt;
+
+&lt;h2 id="endoflifeforcloudservices"&gt;End of Life for Cloud Services&lt;/h2&gt;
+
+&lt;p&gt;We will discontinue Whiteout Networks’ services including all cloud services such as Whiteout Webmail, Whiteout Mailbox, and the public key server as of the end of December 2015. Please migrate any data you may still have until then.&lt;/p&gt;
+
+&lt;h2 id="exportyouremails"&gt;Export your emails&lt;/h2&gt;
+
+&lt;p&gt;To backup your emails from wmail.io, please use a third-party IMAP client, e.g. Thunderbird or Apple Mail. To sign in with a third-party client, please use the following settings:&lt;/p&gt;
+
+&lt;p&gt;IMAP: imap.wmail.io:993 (uses TLS) &lt;br&gt;
+SMTP: smtp.wmail.io:587 (uses STARTTLS) &lt;br&gt;
+Username: Your full &lt;name&gt;@wmail.io email address (&lt;strong&gt;including @wmail.io&lt;/strong&gt;) &lt;br&gt;
+Password: Your wmail.io password&lt;/name&gt;&lt;/p&gt;
+
+&lt;h2 id="exportyourencryptionkeys"&gt;Export your encryption keys&lt;/h2&gt;
+
+&lt;p&gt;To export the encryption keys, please sign in to Whiteout Mail on your desktop, then to go “Account” &gt; “Export keypair”. Please note: Export your keys on the desktop; this will not work in the Android and iOS apps due to a browser bug!&lt;/p&gt;
+
+&lt;h2 id="whatnext"&gt;What Next&lt;/h2&gt;
+
+&lt;p&gt;There are many PGP products available to you and your choice may vary depending on your requirements. &lt;/p&gt;
+
+&lt;p&gt;We take our commitment to the open source community very seriously and invite parties interested in continuing the development to get in touch.&lt;/p&gt;
+
+&lt;p&gt;In the meantime we would certainly recommend checking out &lt;a href="https://www.mailvelope.com/"&gt;Mailvelope&lt;/a&gt;!&lt;/p&gt;
+
+&lt;p&gt;Many thanks to all of our users for the support and feedback that you have given us. &lt;/p&gt;
+
+&lt;p&gt;All the best, &lt;br&gt;
+Team Whiteout&lt;/p&gt;</content:encoded></item><item><title>Whiteout Mailbox Personal Edition: Now Available For Free!</title><description>&lt;p&gt;In the last six weeks we have had a lot of discussion with our user community around product packaging and pricing, primarily within the context of our crowdfunding campaign, where we tried to pre-sell the upcoming Personal and Pro editions of Whiteout Mailbox. &lt;/p&gt;
+
+&lt;p&gt;The overwhelming feedback that we received during&lt;/p&gt;</description><link>http://blog.whiteout.io/2015/06/29/whiteout-mailbox-personal-edition-now-available-for-free/</link><guid isPermaLink="false">d079120f-c21c-423c-ae0c-b0f1651bd3a8</guid><category>Product</category><dc:creator>Oliver Gajek</dc:creator><pubDate>Mon, 29 Jun 2015 11:15:18 GMT</pubDate><content:encoded>&lt;p&gt;In the last six weeks we have had a lot of discussion with our user community around product packaging and pricing, primarily within the context of our crowdfunding campaign, where we tried to pre-sell the upcoming Personal and Pro editions of Whiteout Mailbox. &lt;/p&gt;
+
+&lt;p&gt;The overwhelming feedback that we received during the campaign showed that there is strong interest in a free product version for Whiteout Mailbox. Users expect to be given a useful version of a product for free in exchange for their commitment to using the product and for referring others to it. &lt;/p&gt;
+
+&lt;p&gt;So today we are happy to announce that &lt;strong&gt;we are offering Whiteout Mailbox Personal Edition with 2GB storage for free&lt;/strong&gt;, starting today. The product is still in beta, but you can &lt;a href="https://whiteout.io/#pricing"&gt;sign up&lt;/a&gt; today, no invite code needed. And tell your friends!&lt;/p&gt;
+
+&lt;p&gt;The Pro version is under development and will be available later this year. The Whiteout Mail client for use with your existing mailbox is of course also available for free. &lt;/p&gt;
+
+&lt;p&gt;Many thanks again to everybody for your valuable input.&lt;/p&gt;</content:encoded></item><item><title>Facebook and PGP. A Pleasant Surprise.</title><description>&lt;p&gt;&lt;a href="https://www.facebook.com/notes/protect-the-graph/securing-email-communications-from-facebook/1611941762379302"&gt;This&lt;/a&gt; is a welcome surprise. &lt;/p&gt;
+
+&lt;p&gt;Facebook announced the ability for users to upload their public key so that they can receive their messages from Facebook in encrypted form. &lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://blog.whiteout.io/content/images/2015/06/Bildschirmfoto-2015-06-01-um-16-36-04.png" alt=""&gt;&lt;/p&gt;
+
+&lt;p&gt;This is remarkable in several ways:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;It clearly demonstrates that &lt;strong&gt;PGP is the right way to go about encrypting email&lt;/strong&gt;. Email is&lt;/p&gt;&lt;/li&gt;&lt;/ol&gt;</description><link>http://blog.whiteout.io/2015/06/02/facebook-and-pgp-a-pleasant-surprise/</link><guid isPermaLink="false">5b20973b-49f9-4bef-b121-2bb5b8398c37</guid><dc:creator>Oliver Gajek</dc:creator><pubDate>Tue, 02 Jun 2015 06:48:45 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href="https://www.facebook.com/notes/protect-the-graph/securing-email-communications-from-facebook/1611941762379302"&gt;This&lt;/a&gt; is a welcome surprise. &lt;/p&gt;
+
+&lt;p&gt;Facebook announced the ability for users to upload their public key so that they can receive their messages from Facebook in encrypted form. &lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://blog.whiteout.io/content/images/2015/06/Bildschirmfoto-2015-06-01-um-16-36-04.png" alt=""&gt;&lt;/p&gt;
+
+&lt;p&gt;This is remarkable in several ways:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;It clearly demonstrates that &lt;strong&gt;PGP is the right way to go about encrypting email&lt;/strong&gt;. Email is so prevalent precisely because it is the one message format where I don’t have to worry about what client or server you use. As long as I have your address I can communicate with you. The same goes for encryption. I want to be able to send encrypted messages to you without having to worry about which client or crypto tools you use. &lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Notifications from FB are now encrypted. That may or may not be important in real life. Many people would argue that sensitive information doesn’t belong on FB in the first place. But we can hopefully agree that &lt;strong&gt;putting more encrypted content onto the wire is a good thing in itself&lt;/strong&gt;, more security, less surveillance.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;More importantly, &lt;strong&gt;password reset emails are now encrypted&lt;/strong&gt;. This is huge. A hacker who hijacks your email account by cracking your password is easily able to reset all your passwords and destroy your online identity. With encrypted password reset messages that isn’t possible anymore. Well done!&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;The most important implication to the more widespread adoption of encryption is the potential to &lt;strong&gt;use FB as a database for acquiring people’s public keys&lt;/strong&gt;. If I know your FB name I can look for your public key at &lt;a href="https://www.facebook.com/yourfacebookname/publickey/download"&gt;https://www.facebook.com/yourfacebookname/publickey/download&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;So secure email products such as &lt;a href="https://whiteout.io/"&gt;Whiteout Mail&lt;/a&gt; could add FB as another keyserver to query when acquiring keys (more on that &lt;a href="https://blog.whiteout.io/2015/02/06/making-pgp-key-management-invisible-so-johnny-can-encrypt/"&gt;here&lt;/a&gt;).&lt;/p&gt;</content:encoded></item><item><title>Whiteout Mail Available For iOS.</title><description>&lt;p&gt;Today we have some exciting news to share: The Whiteout Mail client now available for iOS. So you can send and receive encrypted email on all your devices.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;The First Integrated PGP-client for iOS&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;In fact Whiteout Mail is the first wholly-integrated PGP-client for iOS, where a single app lets&lt;/p&gt;</description><link>http://blog.whiteout.io/2015/05/07/whiteout-mail-client-available-for-ios/</link><guid isPermaLink="false">42e2b28a-5cc9-4d0b-a98e-a97267106685</guid><category>Product</category><dc:creator>Oliver Gajek</dc:creator><pubDate>Thu, 07 May 2015 14:26:45 GMT</pubDate><content:encoded>&lt;p&gt;Today we have some exciting news to share: The Whiteout Mail client now available for iOS. So you can send and receive encrypted email on all your devices.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;The First Integrated PGP-client for iOS&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;In fact Whiteout Mail is the first wholly-integrated PGP-client for iOS, where a single app lets users read and write encrypted emails and communicate with other PGP users. And with full IMAP support it connects to any existing mailbox.&lt;/p&gt;
+
+&lt;p&gt;The application has a fully responsive design, runs on every size display and adapts to the available screen real estate, with optimized layouts for smartphone and tablet form factors.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://blog.whiteout.io/content/images/2015/05/unnamed.png" alt="alt"&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Secure Key Synchronization Across All Devices&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;With Whiteout’s secure key synchronization users can send and receive PGP-encrypted messages on all their devices, desktop, tablet smartphone, iOS, Android, even Chromebooks. And with automatic recipient key lookup, encrypting and signing your email is completely painless.&lt;/p&gt;
+
+&lt;p&gt;A big thank you to the large number of beta testers who braved the Testflight installation procedure and gave us a lot of important feedback.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="https://itunes.apple.com/us/app/whiteout-mail/id934872032"&gt;Click here to install Whiteout Mail for iOS from the iTunes App Store.&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title>PGP: There’s Life In The Old Dog Yet.</title><description>&lt;p&gt;Email is the most sensitive and private form of electronic communication. Better protect it from prying eyes. By applying strong encryption. That we can agree on. The good news: The PGP standard for email encryption has been around for what feels like forever. It is not without problems, though, as&lt;/p&gt;</description><link>http://blog.whiteout.io/2015/02/25/pgp-theres-life-in-the-old-dog-yet/</link><guid isPermaLink="false">998795ab-86ba-4cbb-bf65-c5b20ee068f6</guid><dc:creator>Oliver Gajek</dc:creator><pubDate>Wed, 25 Feb 2015 12:56:40 GMT</pubDate><content:encoded>&lt;p&gt;Email is the most sensitive and private form of electronic communication. Better protect it from prying eyes. By applying strong encryption. That we can agree on. The good news: The PGP standard for email encryption has been around for what feels like forever. It is not without problems, though, as Matthew Green’s &lt;a href="http://blog.cryptographyengineering.com/2014/08/whats-matter-with-pgp.html"&gt;detailed analysis&lt;/a&gt; points out. &lt;/p&gt;
+
+&lt;p&gt;Now noted cryptographer Moxie Marlinspike has joined the discussion with a rather &lt;a href="http://www.thoughtcrime.org/blog/gpg-and-me/"&gt;pessimistic conclusion&lt;/a&gt;, yearning for the days when PGP will be gone from his life. &lt;/p&gt;
+
+&lt;p&gt;Maybe that is going a bit too far. &lt;/p&gt;
+
+&lt;p&gt;Let’s not forget what we have in PGP:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;It’s been around for a long time, so it’s cryptographically well understood. It is one of the very few crypto standards that we can &lt;a href="http://www.spiegel.de/international/germany/inside-the-nsa-s-war-on-internet-security-a-1010361.html"&gt;reasonably assume&lt;/a&gt; to be practically unbreakable.&lt;/li&gt;
+&lt;li&gt;There are a variety of implementations and there is a small but vibrant and highly committed developer community.&lt;/li&gt;
+&lt;li&gt;A small but active and committed user community.&lt;/li&gt;
+&lt;li&gt;It works in a federated system such as email. Systems such as TextSecure and iMessage are centralized services for ephemeral communication that don’t work in a decentralized, per domain architecture. This is probably unacceptable for corporate use cases where hosting your own server and data-retention laws are must-have requirements. &lt;/li&gt;
+&lt;li&gt;Unlike chat, email is offline, asynchronous by nature, and incredibly sticky. That brings completely different requirements for encryption, which the suggested alternatives like the TextSecure protocol don’t solve.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Now let’s look at the problems that people point to. And, yes, these are real problems and also the reason why adoption is not more widespread:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Usability&lt;/strong&gt;. Especially the installation, where I need to integrate my email client with a PGP add-on and a crypto toolkit and where that takes me several hours with an uncertain outcome. Not for the faint of heart. Nor for corporate users without admin privileges.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Lack of mobile device support&lt;/strong&gt;. What good is email that doesn’t show up on all my devices. Of which the modern user typically uses more than three during the day.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Manual key management&lt;/strong&gt;. Where to story my keys. How not to lose them. How to acquire keys for other people. Yes that can be tricky and prone to error. Even Edward Snowden himself &lt;a href="https://firstlook.org/theintercept/2014/10/28/smuggling-snowden-secrets/"&gt;fell victim to that.&lt;/a&gt; &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Lack of forward secrecy&lt;/strong&gt;. If my private key is compromised tomorrow an attacker will be able to read all of my past messages.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Outdated crypto primitives&lt;/strong&gt;. Since the OpenPGP standard has grown over time, there are multiple cipher suites and packaging format that a client needs to support. This makes the protocol quite complex.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Lack of meta-data security&lt;/strong&gt;. Sender, recipient, date/time, and the subject are all transmitted in the clear.&lt;/p&gt;
+
+&lt;p&gt;At least some of theses challenges can be addressed without reinventing the whole wheel.&lt;/p&gt;
+
+&lt;p&gt;We are developing a &lt;strong&gt;consumer-grade, mobile-first email client&lt;/strong&gt; that has everything in one package. Easy to install, easy to use. And with no software to be installed on your PC and all traffic tunneled via HTTPS also ready to go for a corporate environment.&lt;/p&gt;
+
+&lt;p&gt;We make the client available on &lt;strong&gt;all relevant platforms,&lt;/strong&gt; desktop, Chromebook, Android, iOS, Windows phone. &lt;/p&gt;
+
+&lt;p&gt;And we offer an &lt;strong&gt;integrated key management&lt;/strong&gt; that makes the whole process invisible to Whiteout users while still supporting interoperability with existing PGP/GPG users. More &lt;a href="https://blog.whiteout.io/2015/02/06/making-pgp-key-management-invisible-so-johnny-can-encrypt/"&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Take a look at Whiteout Mail here:  &lt;a href="https://whiteout.io/"&gt;https://whiteout.io/&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;It also seems that we’re not alone in our commitment to PGP. The &lt;a href="https://gnupg.org/index.html"&gt;recent strong reaction&lt;/a&gt; from the community and the industry to the reports that key developer Werner Koch was running out of money is encouraging.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;How Do We See the Future?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;In order for public key discovery to become transparent and somewhat reliable, there need to be a federated and reliable key infrastructure. Werner Koch made an interesting suggestion &lt;a href="http://rem.eifzilla.de/archives/2015/02/24/re-die-schlssel-falle"&gt;here&lt;/a&gt; to use the DNS system. That way mail providers could validate uploaded keys, which would give PGP client apps a reliable source of keys. &lt;a href="https://github.com/google/end-to-end/wiki/Key-Distribution"&gt;Other projects&lt;/a&gt; are working on making the key distribution itself more reliable than the unauthenticated write-only storage HKP servers are currently. Applications could hide public key discovery completely from users which would allow for a UX that is similar to iMessage or TextSecure without throwing the whole SMTP/MIME transport layer overboard (which is likely to stay with us for the next 10-20 years).&lt;/p&gt;
+
+&lt;p&gt;And while we do agree that there needs to be a standard for email encryption that goes beyond PGP we believe it will be quite a while before we will have a robust alternative. Early efforts such as Dark Mail, TextSecure and others, may be important contributions, but it still feels like early days.&lt;/p&gt;
+
+&lt;p&gt;In fact, when we consider the key requirements for email, among them decentralized deployment and administration and the ability to store old conversations and to access them from any device, the new standard may just turn out to be very similar to SMTP and PGP. &lt;/p&gt;</content:encoded></item><item><title>Banning Encryption? At Best Naive.</title><description>&lt;p&gt;We all stand in shock at the horrific attacks in Paris. Our thoughts go out to the families and everybody affected. And once again we are confronted with the fact that the open society has enemies and is vulnerable.&lt;/p&gt;
+
+&lt;p&gt;So people are worried and are looking to their elected leaders&lt;/p&gt;</description><link>http://blog.whiteout.io/2015/01/15/banning-encryption-at-best-naive/</link><guid isPermaLink="false">14647af6-417f-46ba-8a43-7aeda66d397b</guid><dc:creator>Oliver Gajek</dc:creator><pubDate>Thu, 15 Jan 2015 16:00:10 GMT</pubDate><content:encoded>&lt;p&gt;We all stand in shock at the horrific attacks in Paris. Our thoughts go out to the families and everybody affected. And once again we are confronted with the fact that the open society has enemies and is vulnerable.&lt;/p&gt;
+
+&lt;p&gt;So people are worried and are looking to their elected leaders for answers. These leaders would do well to provide the thoughtful and carefully reasoned answers that we should expect from them. And to not exploit the situation for populistic campaigning. &lt;/p&gt;
+
+&lt;p&gt;A blatant example of the latter is the UK PM now &lt;a href="http://www.theguardian.com/uk-news/2015/jan/15/avid-ameron-ask-us-barack-obama-help-tracking-islamist-extremists-online?CMP=EMCNEWEML6619I2"&gt;calling for a ban on encryption&lt;/a&gt;. &lt;/p&gt;
+
+&lt;p&gt;This line of argument is at best misleading. The underlying fallacies are:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;It cannot be done&lt;/strong&gt;: You don’t need an advanced degree in information technology to understand that this simply cannot be done. Cory Doctorow explains it well &lt;a href="http://boingboing.net/2015/01/13/what-david-cameron-just-propos.html"&gt;here&lt;/a&gt;. In a nutshell, the tools and technologies are out in the open and cannot be controlled by legislative means.
+ &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;It also wouldn’t work&lt;/strong&gt;: Imagine for a second a world without encryption and the corresponding mass surveillance of everything that floats around the net. It is inconceivable how governments would now separate the signal from the noise and generate actionable insights. Also, when we look at the catastrophes of the recent past, among them New York, London, Madrid, and now Paris, most experts agree that the obvious breakdowns in intelligence and anti-terrorism that allowed these events to take place were not at all due to a lack of data. But to inter-agency process breakdown and a lack of feet on the street to do real-world, hands-on intelligence work. 
+ &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;It would actually increase our risk&lt;/strong&gt;: If we did give up protection and allowed the government to monitor every communication, how would we prevent anybody else from exploiting the same backdoors and loopholes? Naturally spies, attackers, saboteurs would use precisely the same access. The risk would be higher than the reward. &lt;/p&gt;
+
+&lt;p&gt;So the discussion started by David Cameron is at best naive.&lt;/p&gt;
+
+&lt;p&gt;Or, if you’re more cynically inclined, precisely the kind of topic politicians will jump on: Complex to understand, ultimately destined for failure, but immensely productive when you want to own a topic that will not go away and you can keep coming up with deeply concerned soundbites. &lt;/p&gt;
+
+&lt;p&gt;In any case it is a dangerous distraction. Protecting the open society from its enemies will require a different leadership. One where you strengthen the moral compass and respect the intelligence of your citizens rather than dumbing things down.&lt;/p&gt;
+
+&lt;p&gt;Even if that means telling them things they may not want to hear. That we might need to pay for more police for more hands-on old-fashioned intelligence and protection footwork. &lt;/p&gt;
+
+&lt;p&gt;An update: &lt;a href="http://www.theguardian.com/us-news/2015/jan/15/-sp-secret-us-cybersecurity-report-encryption-protect-data-cameron-paris-attacks"&gt;Now it turns out&lt;/a&gt; that we find the US intelligence agencies themselves urging more encryption to protect private data for citizens and businesses. And, just this week, the &lt;a href="http://t3n.de/news/bsi-praesident-gnupg-588708/"&gt;German government’s cyber security czar urged businesses&lt;/a&gt; to adopt more encryption to protect against espionage. Pointing specifically to PGP as the technology of choice. I agree. &lt;/p&gt;</content:encoded></item><item><title>IMAP and Android</title><description>&lt;p&gt;At Whiteout Networks we have been busy improving the Whiteout Mail client. We have just published an update and wanted to let you know what we have been working on:&lt;/p&gt;
+
+&lt;h2 id="betterimapsupport"&gt;Better IMAP Support&lt;/h2&gt;
+
+&lt;p&gt;Where Whiteout Mail previously only worked with Gmail, you can now connect additional email servers, both well-known&lt;/p&gt;</description><link>http://blog.whiteout.io/2014/07/24/imap-and-android/</link><guid isPermaLink="false">1a3f0a4c-2127-498a-8aae-a1073cf1b129</guid><category>Product</category><dc:creator>Oliver Gajek</dc:creator><pubDate>Thu, 24 Jul 2014 15:29:13 GMT</pubDate><content:encoded>&lt;p&gt;At Whiteout Networks we have been busy improving the Whiteout Mail client. We have just published an update and wanted to let you know what we have been working on:&lt;/p&gt;
+
+&lt;h2 id="betterimapsupport"&gt;Better IMAP Support&lt;/h2&gt;
+
+&lt;p&gt;Where Whiteout Mail previously only worked with Gmail, you can now connect additional email servers, both well-known servers such as Yahoo or T-Online, as well as your own IMAP server with a custom configuration. So now you can use end-to-end encryption with many more recipients.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://blog.whiteout.io/content/images/2015/02/Bildschirmfoto-2014-07-24-um-17-53-10.png" alt="Choose from one of your favorite mail providers."&gt;&lt;/p&gt;
+
+&lt;h2 id="androidappnowinalpha"&gt;Android App Now in Alpha&lt;/h2&gt;
+
+&lt;p&gt;We have completed the first version of the Android implementation. This is now available as an Alpha version in the Google Play Store. Click &lt;a href="https://play.google.com/store/apps/details?id=io.whiteout.WhiteoutMail"&gt;here&lt;/a&gt; to install.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://blog.whiteout.io/content/images/2015/02/Mail-list-Nexus-5-2.png" alt="Android App now available!"&gt;&lt;/p&gt;
+
+&lt;p&gt;If you already use Whiteout Mail on your desktop, please note that you will need to use the experimental "Key sync" functionality to store your encrypted key pair in our cloud. When you install the Android app you will be able to synchronize the key pair onto your Android device. See &lt;a href="https://blog.whiteout.io/2014/07/07/secure-pgp-key-sync-a-proposal"&gt;here&lt;/a&gt; for more details on the Key sync service. &lt;/p&gt;
+
+&lt;h2 id="performanceimprovements"&gt;Performance Improvements&lt;/h2&gt;
+
+&lt;p&gt;We added significant performance improvements for handling larger mailboxes with thousands of messages. These are especially noticeable on mobile devices.&lt;/p&gt;
+
+&lt;h2 id="pgpinteroperability"&gt;PGP Interoperability&lt;/h2&gt;
+
+&lt;p&gt;This was the number one request from our beta users. Some people already have an existing keypair that they want to reuse while others have contacts who already use PGP that they want to communicate with. With the new release you now can:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;import your existing private key when installing the app.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;get the public key for a contact and import that (under “Contacts”).&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title>Email Metadata Privacy – should you care or not</title><description>&lt;p&gt;When we first heard of Edward Snowden in June 2013, we heard of the collection of metadata at Verizon. It took us a while to figure out if that was troubling. &lt;br&gt;
+Now we know that it is. Who calls whom at what time and how often reveals many things that&lt;/p&gt;</description><link>http://blog.whiteout.io/2014/05/29/email-metadata-privacy-should-you-care-or-not/</link><guid isPermaLink="false">3f85f3aa-6b99-4215-b908-3c223ab96a25</guid><category>Privacy</category><category>Metadata</category><dc:creator>Oliver Gajek</dc:creator><pubDate>Thu, 29 May 2014 10:00:00 GMT</pubDate><content:encoded>&lt;p&gt;When we first heard of Edward Snowden in June 2013, we heard of the collection of metadata at Verizon. It took us a while to figure out if that was troubling. &lt;br&gt;
+Now we know that it is. Who calls whom at what time and how often reveals many things that we may want to keep private. How often I call my doctor, priest, psychiatrist, or astrological hotline is my business and none of yours.&lt;/p&gt;
+
+&lt;p&gt;The same goes for Email where people now are asking for privacy solutions, as they have understood how personal and private this information is and that they can’t trust the promises of technology and service providers. People naturally have turned to PGP for email encryption as the widely accepted standard for protecting their private messages.&lt;/p&gt;
+
+&lt;p&gt;But, guess what, PGP only encrypts the body of your message. Subject line, sender, recipient, time, IP address, and a host of other technical details are transmitted in the clear.&lt;/p&gt;
+
+&lt;p&gt;Trouble is that they have to be in order to make their way to the intended recipient across public networks. Much like a letter that you post will have a recipient address and a return address and a post office stamp that your postman and your neighbor can inspect. So while the content of your letter will be private while sender and recipient will not be anonymous.&lt;/p&gt;
+
+&lt;p&gt;So the big question becomes if this is a problem or not. Three things to consider:&lt;/p&gt;
+
+&lt;p&gt;It’s a problem depending on what you’re afraid of. Me, I’m afraid of somebody breaking into my Gmail account and posting 10-year old messages on the web for everybody to see. Every now and then I stumble across some old message and am embarrassed by what I wrote. Nothing more, nothing less. Thankfully not in the league of &lt;a href="http://nypost.com/2013/08/03/inside-colin-powells-hot-and-heavy-e-mails/"&gt;Colin Powell and Corina Cretu&lt;/a&gt;, but still. Wouldn’t want to see the old stuff in public. And this is just embarrassment in retrospect. I don’t even know what might be embarrassing or problematic in the future. Think of being denied entry into some country where you criticized an emerging party in an email ten years ago. And now that party is in power and they have read that email. That’s the kind of stuff that worries me. Turns out that PGP encryption of my message text takes care of this very nicely. So I’ll have some of that PGP encryption and pronto.&lt;/p&gt;
+
+&lt;p&gt;Of course I’m interested in exposing even less for embarrassment or misuse. So an email provider that is very specific on metadata retention is certainly interesting. They really have no need to keep a complete record of who I communicated with and about what once the messages have been delivered. So transparency about data retention, ideally audited by independent and trustworthy experts, and completely open communication on attempted breakins and governmental requests for data access would absolutely win my business. Full disclosure: We’re working on that…&lt;/p&gt;
+
+&lt;p&gt;Since this is such a big issue we can reasonably expect for the technology industry to address the issue of encrypting metadata for email. The so-called Darkmail alliance has gotten quite a bit of press last year and may come up with an exciting technology change. We haven’t heard much from them recently so it’s a bit hard to say more. And of course it will be useful only if it turns out to be a genuine standard adopted by multiple technology and service providers.&lt;/p&gt;
+
+&lt;p&gt;In the meantime it’s probably best to apply the old 80/20 rule. If I can encrypt 80 percent of my email content with 20 percent of the effort then that’s good enough for me. That is why PGP wins for the foreseeable future.&lt;/p&gt;</content:encoded></item><item><title>Whiteout Mail: Now in Beta!</title><description>&lt;p&gt;In the last weeks and months we have had over a thousand people take a look at our Alpha version. Many of you have given us important feedback on how you would like to use Whiteout Mail to protect your private communication and what we should be working on in&lt;/p&gt;</description><link>http://blog.whiteout.io/2014/05/16/whiteout-mail-now-in-beta/</link><guid isPermaLink="false">f221d571-6534-412e-a84a-a845ca13a4b0</guid><category>Product</category><dc:creator>Oliver Gajek</dc:creator><pubDate>Fri, 16 May 2014 11:21:47 GMT</pubDate><content:encoded>&lt;p&gt;In the last weeks and months we have had over a thousand people take a look at our Alpha version. Many of you have given us important feedback on how you would like to use Whiteout Mail to protect your private communication and what we should be working on in the future. A big thank you to all of you who have gotten in touch!&lt;/p&gt;
+
+&lt;h3 id="nowinbeta"&gt;Now in Beta!&lt;/h3&gt;
+
+&lt;p&gt;With the most recent release we are upgrading to Beta status. We feel that the feature set as well as stability and performance are now where they need to be for production use. We use it every day and we hope that you will too. And we will make it better all the time, with frequent updates every two weeks.&lt;/p&gt;
+
+&lt;p&gt;To celebrate today's beta release, we are also launching a complete redesign of the &lt;a href="https://whiteout.io"&gt;whiteout.io homepage&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id="whatsnew"&gt;What’s New&lt;/h3&gt;
+
+&lt;p&gt;We have added many important features, among them:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Encrypted attachments&lt;/li&gt;
+&lt;li&gt;Display HTML mails&lt;/li&gt;
+&lt;li&gt;Forward, CC, BCC&lt;/li&gt;
+&lt;li&gt;Support for popular character sets (Umlauts, Chinese, etc.)&lt;/li&gt;
+&lt;li&gt;Option to manage keys without a passphrase&lt;/li&gt;
+&lt;li&gt;Option to change your passphrase&lt;/li&gt;
+&lt;li&gt;Importing your existing key pair&lt;/li&gt;
+&lt;li&gt;Importing the public keys of contacts using other PGP clients&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;And much more. For details please consult the various &lt;a href="https://github.com/whiteout-io/mail-html5/releases"&gt;Release notes&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id="installing"&gt;Installing&lt;/h3&gt;
+
+&lt;p&gt;If you have already installed the Whiteout Mail Alpha, just start the App and you will be upgraded automatically. To install the beta please visit the download section on our website:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="https://whiteout.io/#product"&gt;Download Beta&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id="whatscomingnext"&gt;What's coming next&lt;/h2&gt;
+
+&lt;p&gt;Now that we have reached beta quality for our Chrome App with Gmail support, we will start rolling out support for other popular platforms and mail providers. We are already hard at work on apps for iOS and Android, as well as support for popular mail backends like Yahoo Mail, Outlook.com and custom mail server configurations.&lt;/p&gt;
+
+&lt;p&gt;We can only make the best product for you with your continued feedback, so please let us know which features you are interested in the most.&lt;/p&gt;
+
+&lt;h3 id="rememberpublishedcode"&gt;Remember: published code&lt;/h3&gt;
+
+&lt;p&gt;Just as a reminder: All of our source code is published and available for inspection. Feel free to check it out on &lt;a href="https://github.com/whiteout-io/mail-html5"&gt;GitHub&lt;/a&gt;. Many of you have. Thanks again for your effort. You know who you are. &lt;/p&gt;
+
+&lt;h3 id="howtointeractwithus"&gt;How to interact with us&lt;/h3&gt;
+
+&lt;p&gt;We are really interested in and appreciate your ideas and suggestions. Tell us how you use Whiteout and what is important for you as we build out the product. Contact us at &lt;a href="mailto:mail.support@whiteout.io"&gt;mail.support@whiteout.io&lt;/a&gt;, anytime, encrypted or not.&lt;/p&gt;</content:encoded></item><item><title>Press Release Investment</title><description>&lt;p&gt;&lt;strong&gt;High-Tech Gründerfonds and Bayern Kapital Invest in Email Encryption Technology Specialist Whiteout Networks GmbH.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Munich-based company Whiteout Networks GmbH has closed their seed funding round with new investors High-Tech-Gründerfonds (HTGF) and Bayernkapital.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Whiteout Networks develops applications and cloud services for encrypted email communication. For the first time strong encryption based&lt;/p&gt;</description><link>http://blog.whiteout.io/2014/01/24/press-release-investment/</link><guid isPermaLink="false">1d2c7508-8edb-434a-bdde-dcb0846adce3</guid><category>Business</category><dc:creator>Oliver Gajek</dc:creator><pubDate>Fri, 24 Jan 2014 11:00:00 GMT</pubDate><content:encoded>&lt;p&gt;&lt;strong&gt;High-Tech Gründerfonds and Bayern Kapital Invest in Email Encryption Technology Specialist Whiteout Networks GmbH.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Munich-based company Whiteout Networks GmbH has closed their seed funding round with new investors High-Tech-Gründerfonds (HTGF) and Bayernkapital.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Whiteout Networks develops applications and cloud services for encrypted email communication. For the first time strong encryption based on well-known standards for protecting email will be available for non-technical users. The product is based on OpenPGP and ensures a full end-to-end encryption of important messages. Encryption takes place on the end user device. The email service provider does not have access to the message contents. The Whiteout Networks client is implemented as a browser application and will be available on all relevant devices, including desktops, tablets, and smartphones.&lt;/p&gt;
+
+&lt;p&gt;Oliver Gajek, co-founder and CEO of Whiteout Networks, sees the investment from High-Tech Gründerfonds and Bayern Kapital as a major boost for product development and market entry: “People send hundreds of billions of email messages per day, with strongly increasing usage of cloud services and mobile devices. Our mission is to make strong encryption technology easy to use and available on all modern platforms.“&lt;/p&gt;
+
+&lt;p&gt;Holger Heinen, Investment Director at High-Tech Gründerfonds, says: "The recent developments and revelations have shown that we urgently need to protect sensitive communications. Only strong encryption will allow users to get the full benefits from cloud and mobile. This is an entrepreneurial opportunity specifically for startups from Germany.“&lt;/p&gt;
+
+&lt;p&gt;Franz Salzer, Investment Manager at Bayern Kapital, explains: "Germany and the EU have always been pushing for more privacy and data protection. We believe that strong encryption will be a key technology with increasing market demand, both European and worldwide."&lt;/p&gt;
+
+&lt;h4 id="aboutbayernkapitalseedfondsbayern"&gt;About BayernKapital / Seedfonds Bayern&lt;/h4&gt;
+
+&lt;p&gt;Bayern Kapital GmbH, founded at the end of 1995 as part of the “Bavarian Future Initiative, is a wholly-owned subsidiary of the LfA Foerderbank Bayern (Bavaria’s development bank). Bayern Kapital’s objective is to finance research and development as well as the market launch of new products. To date, Bayern Kapital has invested approx. € 188 m in more than 221 innovative, high-tech companies. Bayern Kapital currently manages an overall fund volume of about € 200 m.&lt;/p&gt;
+
+&lt;p&gt;Contact: &lt;br&gt;
+Franz Salzer &lt;br&gt;
+Senior-Beteiligungsmanager &lt;br&gt;
+BayernKapital GmbH &lt;br&gt;
+Ländgasse 135 a &lt;br&gt;
+84028 Landshut &lt;br&gt;
+Tel.: +49 871 92325-18 &lt;br&gt;
+Fax: +49 871 92325-55 &lt;br&gt;
+salzer@bayernkapital.de &lt;br&gt;
+&lt;a href="http://www.bayernkapital.de"&gt;www.bayernkapital.de&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id="abouthightechgrnderfonds"&gt;About High-Tech Gründerfonds&lt;/h4&gt;
+
+&lt;p&gt;High-Tech Gruenderfonds invests in young, high potential high-tech start-ups. The seed financing provided is designed to enable start-ups to take an idea through prototyping and to market launch. Typically, High-Tech Gruenderfonds invests EUR 500,000 in the seed stage, with the potential for up to a total of EUR 2 million per portfolio company in follow-on financing. Investors in this public/private partnership include the Federal Ministry of Economics and Technology, the KfW Banking Group, as well as strategic corporate investors including ALTANA, BASF, B. Braun, Robert Bosch, CEWE, Daimler, Deutsche Post DHL, Deutsche Telekom, Evonik, Lanxess, media + more venture Beteiligungs GmbH &amp;amp; Co. KG, METRO, Qiagen, RWE Innogy, SAP, Tengelmann and Carl Zeiss. High-Tech Gruenderfonds has about EUR 573.5 million under management in two funds (EUR 272 million HTGF I, EUR 301.5 million HTGF II).&lt;/p&gt;
+
+&lt;p&gt;Contact: &lt;br&gt;
+High-Tech Gründerfonds Management GmbH &lt;br&gt;
+Holger Heinen &lt;br&gt;
+Schlegelstraße 2 &lt;br&gt;
+53113 Bonn &lt;br&gt;
+Tel:  + 49 228 / 82 30 01-00 &lt;br&gt;
+Fax:  + 49 228 / 82 30 00-5 &lt;br&gt;
+info@htgf.de &lt;br&gt;
+&lt;a href="http://www.high-tech-gruenderfonds.de"&gt;www.high-tech-gruenderfonds.de&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id="aboutwhiteoutnetworks"&gt;About Whiteout Networks&lt;/h4&gt;
+
+&lt;p&gt;Whiteout Networks was founded in 2013 in Munich. The company develops applications and cloud services for encrypted email communication, focusing on ease-of-use and support for all platforms. The first version of the application will be available in the first quarter of 2014.&lt;/p&gt;
+
+&lt;p&gt;Contact: &lt;br&gt;
+Whiteout Networks GmbH &lt;br&gt;
+Oliver Gajek &lt;br&gt;
+c/o Werk1 &lt;br&gt;
+Grafinger Str. 6 &lt;br&gt;
+81671 München &lt;br&gt;
+oliver@whiteout.io &lt;br&gt;
+&lt;a href="https://whiteout.io"&gt;www.whiteout.io&lt;/a&gt;&lt;/p&gt;</content:encoded></item></channel></rss>

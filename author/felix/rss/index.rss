@@ -1,0 +1,171 @@
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" version="2.0"><channel><title>Felix Hammerl - Whiteout Networks</title><description>Our company was founded in 2013 in Munich. Our mission is to provide secure email that is easy to use and runs on all devices.</description><link>http://blog.whiteout.io/</link><generator>Ghost 0.7</generator><lastBuildDate>Mon, 04 Jan 2016 04:52:38 GMT</lastBuildDate><atom:link href="http://blog.whiteout.io/author/felix/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title>Decentralized Key Servers Are Dead</title><description>&lt;p&gt;This blog post examines options to retire the Web-of-Trust (WoT) and the SKS key pool&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Recap&lt;/strong&gt;: The WoT is a decentralized trust model that was created in an attempt at making a decentralized alternative to the centralized trust model of a PKI with it’s hierarchical CA system. If Alice&lt;/p&gt;</description><link>http://blog.whiteout.io/2015/07/10/trust-in-a-decentralized-system/</link><guid isPermaLink="false">601d8b11-966f-4d8b-8cfd-00ba52ab816e</guid><dc:creator>Felix Hammerl</dc:creator><pubDate>Fri, 10 Jul 2015 12:02:57 GMT</pubDate><content:encoded>&lt;p&gt;This blog post examines options to retire the Web-of-Trust (WoT) and the SKS key pool&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Recap&lt;/strong&gt;: The WoT is a decentralized trust model that was created in an attempt at making a decentralized alternative to the centralized trust model of a PKI with it’s hierarchical CA system. If Alice signs Bob’s key, Alice vouches for Bob being who he claims to be. If enough users sign Bob’s key, any third party can have a reasonable expectation that Bob is in fact the Bob they want to contact.&lt;/p&gt;
+
+&lt;p&gt;At Whiteout, we conciously chose to bypass the WoT in order to &lt;a href="https://blog.whiteout.io/2015/02/06/making-pgp-key-management-invisible-so-johnny-can-encrypt/"&gt;make key management easy&lt;/a&gt;. Without looking up a key’s signatures, a user can be reasonably sure that keys from the Whiteout Key Server belong to whoever owns the email address, because we validate their contact's public key. But unfortunately, that is not true for the SKS key pool.&lt;/p&gt;
+
+&lt;h4 id="whatswrongwiththewot"&gt;What’s Wrong With The WoT?&lt;/h4&gt;
+
+&lt;p&gt;What exactly is the problem with the WoT and why do we need a replacement? Here are a few issues that fundamentally hinder adoption:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Key Signing Parties&lt;/strong&gt;: At a key signing party, people sign other people’s keys when they are physically present, possibly with having their ID checked and personally confirming their key’s fingerprint. Those are only for the most hardcore of users, not feasible at all for average users. If this is the smartest solution we have to establish a high degree of trust, it is time for a change.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Revocation&lt;/strong&gt;: Revoking your public key, should you have lost the private key for whatever reason, is impossible. The key will just live on and will never be renewed. In the words of Phil Zimmermann: “I’m sorry, you’re hosed”. Trust me, that stuff happens more often than you think!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Transparency&lt;/strong&gt; and &lt;strong&gt;Authenticity&lt;/strong&gt;: How do you trust a system where anyone can claim to be somebody he’s not?&lt;/p&gt;
+
+&lt;h4 id="isthereabetterway"&gt;Is There A Better Way?&lt;/h4&gt;
+
+&lt;p&gt;At the &lt;a href="https://www.gnupg.org/blog/20150426-openpgp-summit.html"&gt;PGP Summit earlier this year&lt;/a&gt;, we had a get-together with other (email) encryption projects. Among them were Werner Koch (GPG), GPGTools, OpenKeychain, and the Google e2e team. I moderated a session centered around alternatives for public key management, and finding requirements for the next generation of Identity Providers (IPs). We specifically discussed these requirements:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Federation&lt;/strong&gt;: Decentralization creates complexity and can be really tricky to get right. Centralization is not an alternative, for obvious reasons. But federation would be a feasible middle-ground here. This way, every provider can handle their customers’ keys for them.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Authenticated Uploads&lt;/strong&gt;: In this model, Bob has to authenticate to the Identity Provider (IP), instead of the sender. This makes it easier and creates a trust relationship between IP and user.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Key Server Integrity&lt;/strong&gt;: The key store should be write-only, with an audit trail of what has been added.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Revocation&lt;/strong&gt;: In an append-only world, you would simply take the latest key and replace the key before with it. Remember, the upload itself is authenticated and audited, so you can be fairly sure that you’re talking to the correct person!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;HKP-compatible API and/or REST API, CORS, TLS&lt;/strong&gt;: This should just be part of any modern approach.&lt;/p&gt;
+
+&lt;h4 id="abettertomorrow"&gt;A Better Tomorrow&lt;/h4&gt;
+
+&lt;p&gt;Google has published a lot about their ideas in their &lt;a href="https://github.com/google/end-to-end/wiki/Key-Distribution"&gt;Github Wiki&lt;/a&gt;. Their ideas are in line with the requirements presented above and well worth the read.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="https://keybase.io/docs/server_security"&gt;Keybase.io&lt;/a&gt; has been very vocal with their idea about how an IP should work. It is definitely worth checking out their documentation.&lt;/p&gt;
+
+&lt;p&gt;Very little is known about &lt;a href="https://www.facebook.com/notes/protect-the-graph/securing-email-communications-from-facebook/1611941762379302"&gt;Facebook’s current efforts&lt;/a&gt;, &lt;a href="https://developers.facebook.com/docs/graph-api/reference/v2.2/user"&gt;except that FB exposes the public key through the graph API&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;All in all, we’re excited to see all of the recent efforts to improve over the status quo!&lt;/p&gt;</content:encoded></item><item><title>Whiteout Mail 1.0 and Security Audit by Cure53</title><description>&lt;p&gt;As we started closing in on version 1.0, there was one more item on the roadmap: A security audit by a reputable source. A trusted partner since we started Whiteout Networks, Cure53 from Berlin was the obvious choice. &lt;/p&gt;
+
+&lt;p&gt;Cure53 has profound knowledge of web security, giving both high-level conceptual&lt;/p&gt;</description><link>http://blog.whiteout.io/2015/06/11/whiteout-mail-1-0-and-security-audit-by-cure53/</link><guid isPermaLink="false">4a03ab0f-3680-4961-8138-67babb5029f7</guid><category>Security</category><category>Product</category><dc:creator>Felix Hammerl</dc:creator><pubDate>Thu, 11 Jun 2015 15:21:38 GMT</pubDate><content:encoded>&lt;p&gt;As we started closing in on version 1.0, there was one more item on the roadmap: A security audit by a reputable source. A trusted partner since we started Whiteout Networks, Cure53 from Berlin was the obvious choice. &lt;/p&gt;
+
+&lt;p&gt;Cure53 has profound knowledge of web security, giving both high-level conceptual advice, as well as well-crafted proof-of-concept-attacks. This has helped to uncover and fix issues that would have never surfaced otherwise.&lt;/p&gt;
+
+&lt;p&gt;We’d like to thank them for the fruitful collaboration and their uncompromising stance on security! It was fun to track down the issues and fix them, and we’re proud to say that this ongoing process has helped Whiteout Mail become better in many ways.&lt;/p&gt;
+
+&lt;p&gt;Usability is very dear to us, as good usability directly translates into security. During the audit, Whiteout Mail was not only subjected to attacks, but also inspected for ambiguous messaging for the less tech-savvy user of email encryption. &lt;/p&gt;
+
+&lt;p&gt;All of the the high-severity vulnerabilities have been discussed and fixed/mitigated, as well as many of the medium to low severity vulnerabilities. We will continue working on the open issues in the coming weeks.&lt;/p&gt;
+
+&lt;p&gt;Here is an excerpt from the report’s conclusion:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Cure53 has followed the Whiteout team over the years, providing thorough security advice and in-depth audit. Keep in mind that the first tests and discussion started in late 2013 and continued fruitfully until this day. Cure53 is therefore in a position to have watched the software grow into the current shape of the long-anticipated version 1.0. In the current state of development, Whiteout has mastered mitigation of a large range of security issues. It has matured to a level, where an attacker can only (if at all) revert to social engineering attacks in hopes of meeting his or her goals. Only minor issues remain capable of causing limited damage to the user-base and their encrypted communications.&lt;/p&gt;
+  
+  &lt;p&gt;Providing a secure yet usable mail encryption software is not an easy task and requires consideration of a multitude of attacks, as well as a well-balanced security defense deployed across many levels. It begins on the lower layers of mail reception, mail body parsing and key management, and then moves all the way to the high up handling of the application stack, where a safe, secure and comprehensible UI is required to ensure that the user makes the right decisions. Over the mentioned time period a close collaboration of the Whiteout team with Cure53 was marked by several code audits, concept reviews, discussions and design considerations. Eventually, the software in scope reached the necessary level of maturity, allowing for it to be labeled a 1.0 version without false pretense or an overly quick jump to the first stable major release.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Please follow this link to full the report: &lt;a href="https://cure53.de/pentest-report_whiteout.pdf"&gt;https://cure53.de/pentest-report_whiteout.pdf&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title>Why Alice has a problem if Bob can't encrypt</title><description>&lt;p&gt;I listened to many good talks at the 31st Chaos Communication Congress in Hamburg (GER) last December. I was especially impressed by &lt;a href="http://media.ccc.de/browse/congress/2014/31c3_-_6154_-_en_-_saal_1_-_201412272300_-_crypto_tales_from_the_trenches_-_nadia_heninger_-_julia_angwin_-_laura_poitras_-_jack_gillum.html#video"&gt;"Crypto Tales from the Trenches"&lt;/a&gt; by Nadia Heninger, Julia Angwin, Laura Poitras, and Jack Gillum, and &lt;a href="http://media.ccc.de/browse/congress/2014/31c3_-_6258_-_en_-_saal_1_-_201412282030_-_reconstructing_narratives_-_jacob_-_laura_poitras.html#video"&gt;"Reconstructing narratives"&lt;/a&gt; by Jacob Appelbaum and Laura Poitras. That got me thinking&lt;/p&gt;</description><link>http://blog.whiteout.io/2015/01/29/why-alice-has-a-problem-if-bob-cant-encrypt/</link><guid isPermaLink="false">3a6fcebb-29f3-4eea-a9ee-b26861986bd5</guid><category>UX</category><dc:creator>Felix Hammerl</dc:creator><pubDate>Thu, 29 Jan 2015 09:43:15 GMT</pubDate><content:encoded>&lt;p&gt;I listened to many good talks at the 31st Chaos Communication Congress in Hamburg (GER) last December. I was especially impressed by &lt;a href="http://media.ccc.de/browse/congress/2014/31c3_-_6154_-_en_-_saal_1_-_201412272300_-_crypto_tales_from_the_trenches_-_nadia_heninger_-_julia_angwin_-_laura_poitras_-_jack_gillum.html#video"&gt;"Crypto Tales from the Trenches"&lt;/a&gt; by Nadia Heninger, Julia Angwin, Laura Poitras, and Jack Gillum, and &lt;a href="http://media.ccc.de/browse/congress/2014/31c3_-_6258_-_en_-_saal_1_-_201412282030_-_reconstructing_narratives_-_jacob_-_laura_poitras.html#video"&gt;"Reconstructing narratives"&lt;/a&gt; by Jacob Appelbaum and Laura Poitras. That got me thinking about the state of crypto in 2015 and the hard parts of developing a cryptosystem for the real world.&lt;/p&gt;
+
+&lt;p&gt;This post sets out to explain the merits of cryptography ("The Good") and how to apply the lessons learned ("The Bad").&lt;/p&gt;
+
+&lt;h1 id="thegood"&gt;The Good&lt;/h1&gt;
+
+&lt;p&gt;More open-source initatives are working towards an encrypted future than ever before. This is a good thing! This shows a stronger level of interest and activity anyone would have expected prior to June 2013.&lt;/p&gt;
+
+&lt;p&gt;A crypto-anarchist's dream is an ideal world where everybody would communicate in encrypted form. Computers of all shapes and sizes would communicate in a way that prevents eavesdropping and allows for tamperproof message exchange, in theory giving birth to a new kind of freedom unlike anything we haveseen before. The change is happening now, at that very moment, all around the globe, right under your nose! Jon Callas' talk &lt;a href="https://www.youtube.com/watch?v=VLTGyYU52VQ"&gt;"The Revolution Will Be Encrypted"&lt;/a&gt; sums this up very welly. If you apply cryptography to modern communication tools, the result can be marvellous:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Cryptography erases distance. You can whisper in someone's ear who is a world away, choose to associate with whom you want to associate. And nobody in between is the wiser.&lt;/li&gt;
+&lt;li&gt;You can speak publicly. Everybody can make sure that the message relayed to them is unmodified.&lt;/li&gt;
+&lt;li&gt;You can speak privately. You can choose to not be on the record. You can create a space where you can be stupid, or be wrong, or assume a different identity, or develop new ideas.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Those three basic human rights, enabled by applied mathematics, offer enormous potential for a free and open society.&lt;/p&gt;
+
+&lt;p&gt;Investigative journalism is a good example here. Besides the legislative, executive and judicial branches of the government, journalism is an extra-governmental forcing function in the system of checks and balances. Investigative journalists have the power to rectify deficiencies. Their unique ability is to get insights in otherwise completely walled-off affairs. In order to do this, the ability to speak privately to your source is a life insurance. All too often in a very literal sense.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;But I have nothing to hide?!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;So, what if you really had nothing to hide? Really? Suffice to say that there are numerous studies out there to show how much of a misconception it is to assume that no harm will come to you because you are not interesting. Surveillance is a form of behavioral control. Because you will change your behavior if you know that you are under surveillance. Those two sources sum this up quite nicely:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://tehlug.org/files/solove.pdf"&gt;"'I've got nothing to hide' and other misunderstandings of privacy" by Daniel Solove&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://www.ted.com/talks/glenn_greenwald_why_privacy_matters"&gt;"Why privacy matters" by Glenn Greenwald&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id="thebad"&gt;The Bad&lt;/h1&gt;
+
+&lt;p&gt;Mass surveillance of electronic communication is a fact. We have had our suspicions for a long time, now we know for sure. Equally worrying are the reports about active corruption of cryptographic standards in order to promote weak or backdoored implementations. Only a small number of well-designed crypto protocols and their implementations in Open Source Software hold up under scrutiny. Among them is the &lt;strong&gt;PGP&lt;/strong&gt; standard for email encryption.&lt;/p&gt;
+
+&lt;p&gt;So while tools for effective protection from mass surveillance exist, they are mostly very hard to use due to bad user experience (UX). Let's look at how an encrypted conversation between Alice and Bob might start:&lt;/p&gt;
+
+&lt;p&gt;1) Alice has to invest time to seek out the appropriate tools. &lt;br&gt;
+2) Alice has to invest time and money to learn to use those new tools. &lt;br&gt;
+3) Alice has to invest time to convince her communication counterpart Bob to use those tools. &lt;br&gt;
+4) Bob has to invest time and money to learn to use those tools, too.&lt;/p&gt;
+
+&lt;p&gt;And they also have to invest time to deal with the overhead of encrypted communication, e.g. being restricted to certain devices.&lt;/p&gt;
+
+&lt;p&gt;Let's have a more detailed look at step 2 in the following section "Make your stuff usable for Alice" and step 4 in the section "Make your stuff usable for Bob".&lt;/p&gt;
+
+&lt;h2 id="makeyourstuffusableforalice"&gt;Make your stuff usable for Alice&lt;/h2&gt;
+
+&lt;p&gt;Your level of protection can only be as good as the weakest link in the chain. The design of cryptosystems in itself is hard enough, especially when they are attacked by an infinitely powerful adversary. But all too often, the &lt;a href="http://www.cs.berkeley.edu/~tygar/papers/Why_Johnny_Cant_Encrypt/USENIX.pdf"&gt;weakest&lt;/a&gt; &lt;a href="http://www.chariotsfire.com/pub/sheng-poster_abstract.pdf"&gt;link&lt;/a&gt; &lt;a href="http://www.academia.edu/3042410/Crying_Wolf_An_Empirical_Study_of_SSL_Warning_Effectiveness"&gt;is the&lt;/a&gt; &lt;a href="http://www.cl.cam.ac.uk/users/rja14/Papers/wcf.pdf"&gt;user&lt;/a&gt;, even if the crypto is solid.&lt;/p&gt;
+
+&lt;p&gt;In that case, the next best option is lowering the entry barrier. This is typically achieved by well-designed UI and UX. But how do you achieve a pleasant UX for crypto? The answer is painfully obvious: &lt;em&gt;Hide the crypto&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;During the past year of working on &lt;a href="https://mail.whiteout.io/"&gt;Whiteout Mail&lt;/a&gt;, I have come to understand that users don't want to be bothered with encryption. Cryptographic tools are typically designed by engineers. An engineer has a pretty good impression of what the program is supposed to do. They know what's happening behind the scenes. They want to be in control. They know about fingerprints and key lengths. They know the difference between a public key and a private key. They want to choose whether to send in PGP/MIME or PGP/INLINE, to encrypt and/or sign a message. They already know what to do. Now guess what would happen if someone took all that knowledge away and told them to use the very same tool again.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://blog.whiteout.io/content/images/2015/02/fa5.jpg" alt="I have no idea what I'm doing"&gt;&lt;/p&gt;
+
+&lt;p&gt;All of a sudden, all the options are overwhelming. There's no way of knowing what it could possibly mean. If a user is unsure about what you want from them, two things will happen:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;They will assume that they will probably do something wrong.&lt;/li&gt;
+&lt;li&gt;Out of fear of doing something wrong they will stop using your stuff altogether.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;If you look more closely, all of the complexity could have been substituted by safe defaults. &lt;a href="https://www.youtube.com/watch?v=is9luGFzqgA"&gt;In his SOUPS '14 keynote&lt;/a&gt; Christopher Soghoian explains why safe defaults are a really good idea when it comes to complexity. Why not use PGP/MIME by default? Why not generate 2k or 4k RSA keys by default? Why not hide signatures if they are valid and only show them if they are invalid? Or why not change use a nomenclature that explains what signatures actually represent, i.e. the message integrity? Most of those things reflect details of the underlying protocol. And the average user mostly does not care about that (and rightfully so).&lt;/p&gt;
+
+&lt;p&gt;Show the details if something goes wrong? &lt;em&gt;Absolutely&lt;/em&gt;. Show that something goes wrong and give the user the ability to dig deeper with optional error information.&lt;/p&gt;
+
+&lt;p&gt;Hide the details as long as everything is ok? &lt;em&gt;Absolutely&lt;/em&gt;. Leave the options to the pros, they'll know what to look for in the preferences.&lt;/p&gt;
+
+&lt;p&gt;So now you've finally managed to create a usable cryptosystem, at least for the Alice you had in mind when you developed it. &lt;/p&gt;
+
+&lt;p&gt;Now comes the hard part: Alice wants to put it to good use and communicate with Bob.&lt;/p&gt;
+
+&lt;h2 id="makeyourstuffusableforbob"&gt;Make your stuff usable for Bob&lt;/h2&gt;
+
+&lt;p&gt;This one is basically about empathy. While your users, i.e. Alice, have at least an idea that they want to use crypto, their communication partners, i.e. Bob, on the other hand are considerably harder to get on board. More likely than not Bob will not even know that he is using cryptography. Bob will be far less motivated to figure out the parts where you failed to guide him. Bob will not know what to do. Please listen to &lt;a href="https://media.ccc.de/browse/congress/2014/31c3_-_6154_-_en_-_saal_1_-_201412272300_-_crypto_tales_from_the_trenches_-_nadia_heninger_-_julia_angwin_-_laura_poitras_-_jack_gillum.html#video"&gt;what Poitras, Angwin et al. say about what happens when you make the Bobs of this world use crypto&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;When you lose Bob during the onboarding process, privacy gives way to convenience. Bob thinks he might as well send in plain text, because who would be interested in him anyway? What's the worst thing that might happen? Bob has no way of knowing that as soon as somebody pulls his communication logs, he is naked and his life is ripped wide open. Would you want the contents of your email account be open to everyone? Just ask &lt;a href="http://www.dailymail.co.uk/news/article-2382681/Colin-Powell-admits-sending-personal-emails-Romanian-diplomat-DENIES-having-affair-hacker-threatens-leak-intimate-messages.html"&gt;Colin Powell&lt;/a&gt;, &lt;a href="http://edition.cnn.com/2011/POLITICS/06/16/weiner.scandal/"&gt;Anthony Weiner&lt;/a&gt;, or &lt;a href="http://edition.cnn.com/2012/11/12/us/petraeus-cia-resignation/"&gt;David Petraeus&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;When you develop a cryptosystem, please have some empathy for Bob, i.e. the people on the other end of the line. Bob is the one that makes or breaks your cryptosystem!&lt;/strong&gt;&lt;/p&gt;</content:encoded></item><item><title>How we operate</title><description>&lt;p&gt;The Snowden publications gave rise to a new breed of applications and services, most of which follow Bruce Schneier's advice: "Encrypt everything". Still, not all of those are created equal. Some weigh convenience over privacy, others provide anonymity. Some focus on ease of use, others are tools for crypto experts.&lt;/p&gt;</description><link>http://blog.whiteout.io/2014/06/12/how-we-operate/</link><guid isPermaLink="false">d6a3a88c-b495-4204-8b0e-a0a53aa09d4b</guid><category>Privacy</category><dc:creator>Felix Hammerl</dc:creator><pubDate>Thu, 12 Jun 2014 08:51:24 GMT</pubDate><content:encoded>&lt;p&gt;The Snowden publications gave rise to a new breed of applications and services, most of which follow Bruce Schneier's advice: "Encrypt everything". Still, not all of those are created equal. Some weigh convenience over privacy, others provide anonymity. Some focus on ease of use, others are tools for crypto experts. Different needs for privacy or anonymity require a refined set of rules to make a choice for one service over another.&lt;/p&gt;
+
+&lt;p&gt;At Whiteout Networks, we strongly believe that privacy and ease of use is what sets us apart. The services provided by Whiteout are crafted with a particular set of rules in mind:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Your data is yours.&lt;/li&gt;
+&lt;li&gt;Your data is encrypted.&lt;/li&gt;
+&lt;li&gt;We can't read your data.&lt;/li&gt;
+&lt;li&gt;You don't need to take our word for it.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id="yourdataisyours"&gt;Your data is yours.&lt;/h2&gt;
+
+&lt;p&gt;Every user can join or leave the Whiteout services at any time. There is no artificial lock-in, you are free to take your encryption keys with you or bring your own keys. We strongly believe in open standards, especially OpenPGP which has been tested time and time again. If it is good enough for the world's leading security experts, it is good enough for us.&lt;/p&gt;
+
+&lt;p&gt;You want to bring you own encryption keys? Fine! &lt;br&gt;
+You want to stay at your current mail provider? Fine! &lt;br&gt;
+You want to be interoperable with other OpenPGP mail clients? Fine!&lt;/p&gt;
+
+&lt;h2 id="yourdataisencrypted"&gt;Your data is encrypted.&lt;/h2&gt;
+
+&lt;p&gt;No sensitive data is stored or sent in the clear. Ever. There is just no way around that and we believe that this is the only way to ensure real privacy.&lt;/p&gt;
+
+&lt;h2 id="wecantreadyourdata"&gt;We can't read your data.&lt;/h2&gt;
+
+&lt;p&gt;Encryption and decryption happens on the client and nowhere else. We take pride in providing uncompromised end-to-end encryption. If you hand over data to our services, it was encrypted by you before. If the client receives data from our Whiteout services, it will be decrypted by you. You are the only person that has access to the decryption keys, and this is the way it should be.&lt;/p&gt;
+
+&lt;p&gt;This sets us apart from other approaches, most notably the web mailers where encryption is handled for you on the server. If our services should get compromised at any point by any type of adversary, we simply can't compromise your privacy. We didn't trust ourselves when we develop our services, so you don't have to, either.&lt;/p&gt;
+
+&lt;h2 id="youdontneedtotakeourwordforit"&gt;You don't need to take our word for it.&lt;/h2&gt;
+
+&lt;p&gt;Encryption happens on the client, with the &lt;a href="https://github.com/whiteout-io/mail-html5"&gt;source code open&lt;/a&gt; for inspection. On top of that, there are regular audits by independent security and cryptography experts.&lt;/p&gt;</content:encoded></item></channel></rss>

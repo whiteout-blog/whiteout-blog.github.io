@@ -1,0 +1,210 @@
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>email.js - The Hard Thing About Old Things</title>
+    <meta name="description" content="">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="../../../../favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="../../../../assets/css/screen.css?v=2c7faa2464">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic%7COpen+Sans:700,400">
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-52535674-2', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+    <link rel="canonical" href="index.html">
+    <meta name="referrer" content="origin">
+    
+    <meta property="og:site_name" content="Whiteout Networks">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="email.js - The Hard Thing About Old Things">
+    <meta property="og:description" content="tl;dr IMAP and SMTP are complex and we at Whiteout released a project called email.js which is an open source toolbox for writing email applications in JavaScript. Electronic mail seems to be all the rage now. Google published...">
+    <meta property="og:url" content="http://blog.whiteout.io/2014/07/01/emailjs-the-hard-thing-about-old-things/">
+    <meta property="article:published_time" content="2014-07-01T15:04:27.000Z">
+    <meta property="article:modified_time" content="2015-01-06T11:05:56.000Z">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="email.js - The Hard Thing About Old Things">
+    <meta name="twitter:description" content="tl;dr IMAP and SMTP are complex and we at Whiteout released a project called email.js which is an open source toolbox for writing email applications in JavaScript. Electronic mail seems to be all the rage now. Google published...">
+    <meta name="twitter:url" content="http://blog.whiteout.io/2014/07/01/emailjs-the-hard-thing-about-old-things/">
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "Whiteout Networks",
+    "author": {
+        "@type": "Person",
+        "name": "Andris Reinman",
+        "image": "http://blog.whiteout.io/content/images/2015/02/132242.jpg",
+        "url": "http://blog.whiteout.io/author/andris",
+        "sameAs": "https://whiteout.io",
+        "description": "Our company was founded in 2013 in Munich. Our mission is to provide secure email that is easy to use and runs on all devices."
+    },
+    "headline": "email.js - The Hard Thing About Old Things",
+    "url": "http://blog.whiteout.io/2014/07/01/emailjs-the-hard-thing-about-old-things/",
+    "datePublished": "2014-07-01T15:04:27.000Z",
+    "dateModified": "2015-01-06T11:05:56.000Z",
+    "description": "tl;dr IMAP and SMTP are complex and we at Whiteout released a project called email.js which is an open source toolbox for writing email applications in JavaScript. Electronic mail seems to be all the rage now. Google published..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost 0.7">
+    <link rel="alternate" type="application/rss+xml" title="Whiteout Networks" href="../../../../rss/index.html">
+</head>
+<body class="post-template">
+
+    
+
+
+<header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        <a class="back-button icon-arrow-left" href="../../../../">Home</a>
+        <a class="subscribe-button" href="https://whiteout.io">whiteout.io</a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">email.js - The Hard Thing About Old Things</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2014-07-01">01 July 2014</time> 
+            </section>
+        </header>
+
+        <section class="post-content">
+            <p><strong>tl;dr IMAP and SMTP are complex and we at Whiteout released a project called <a href="http://emailjs.org/">email.js</a> which is an open source toolbox for writing email applications in JavaScript.</strong></p>
+
+<p>Electronic mail seems to be all the rage now. Google published a new <a href="https://developers.google.com/gmail/api/">API for Gmail</a>, countless e-mail applications have emerged both for solving UX and security issues, transactional e-mail senders are sending out billions of messages on behalf of their customers not to speak of trillions of messages spammers are sending. And yet we are talking about a system that is decades old.</p>
+
+<p><a href="http://tools.ietf.org/html/rfc821">RFC821</a> that describes the SMTP protocol for transmitting messages from one host to another is from 1982, <a href="http://tools.ietf.org/html/rfc822">RFC822</a> that describes the message format is also from 1982 and <a href="http://tools.ietf.org/html/rfc1123">RFC1123</a> that describes how hostnames work so the SMTP server would know how to find the destination for an e-mail address is from 1989. Basically the e-mail we know today is from the '80s. Obviously there was e-mail before then, in fact it was already present for decades but not quite the same as now (<a href="http://en.wikipedia.org/wiki/UUCP">UUCP</a> anyone?). Any modifications to the mentioned standards are mostly backwards compatible – RFC822 knows nothing about MIME but using a RFC822 compatible client you would still be able to read the message even if it looked a bit strange.</p>
+
+<blockquote>
+  <p>Most of the RFCs mentioned in this article are outdated, check the currently valid version from the "Obsoleted by" header when viewing the full text of a standard.</p>
+</blockquote>
+
+<p>To be honest, past decades have not evolved e-mail protocols towards better clarity. All the updates are adding more layers of hacks on top of the old ones. Lets take a simple example – unicode in e-mails. At first only 7-bit ASCII symbols were allowed. This made it very difficult to write messages in other languages besides English. Obviously you can change an "ö" with "oe" in your message but it does not look good at best and is plain horrible or unreadable at worst.</p>
+
+<blockquote>
+  <p>Just to be clear there are RFCs like <a href="http://tools.ietf.org/html/rfc6532">RFC6532</a>, <a href="http://tools.ietf.org/html/rfc6855">RFC6855</a> et al. that fix the issue of using unicode in e-mails by allowing to use 8-bit UTF-8 instead of using 7-bit encodings. These standards are fairly new with limited support by the existing e-mail infrastructure so we need to rely on the older mechanisms for now.</p>
+</blockquote>
+
+<p><a href="http://tools.ietf.org/html/rfc1341">RFC1341</a> introduced an encoding mechanism named Transfer-Encoding that allowed to represent non-ascii character sets using only 7-bit symbols in the message body. You now had an option to encode 8-bit characters to their hexadecimal representation (an "ö" could be represented as =F6 for Latin-1 or =C3=B6 for UTF-8) by using Quoted-Printable encoding or encoding all bytes with the binary safe Base64 encoding. These were not the only two options, you could also use yEnc or older uuencode, but in hindsight we can tell that only Quoted-Printable and Base64 took off. Quoted-Printable is used more for plain text and Base64 for attachments.</p>
+
+<p>Now the bad thing is that Content-Transfer-Encoding which sets the byte encoding and Content-Type which sets the charset encoding only apply to the body of the message. But you probably want to use 8-bit characters in the headers as well. The subject line would be the first thing that comes into mind regarding headers and unicode. You cannot set the encoding for all the headers at once, you must do it on a value by value basis. So <a href="http://tools.ietf.org/html/rfc1522">RFC1522</a> introduced something called "encoded-words".</p>
+
+<p>An encoded word looks like <code>=?CHARSET?Q?encoded_word?=</code> and can be used inside any header text (excluding text inside quotes). <em>CHARSET</em> defines the used charset for this string, <em>Q</em> defines the used transfer encoding (only <em>Q</em> for Quoted-Printable and <em>B</em> for Base64 are allowed), and <em>encoded_word</em> is the value in selected encoding. And to make things even messier the Quoted-Printable used is not the same that is used in the message bodies. For example, this modified encoding does not allow the usage of whitespace, so spaces are replaced with underscores. <em>encoded_word</em> becomes <em>encoded word</em> after decoding.</p>
+
+<p>Remember that encoded words can not be used inside quotes. So what about header parameters? To specify an attachment filename we can add a filename parameter to the Content-Disposition header like this:</p>
+
+<pre><code>Content-Disposition: attachment; filename="my awesome file.txt"
+</code></pre>
+
+<p>If we wanted to use encoded words and not use use quotes (as using encoded words inside quotes is not allowed) it would break the header structure:</p>
+
+<pre><code>Content-Disposition: attachment; filename==?ascii?q?my_awesome_file.txt?=
+</code></pre>
+
+<p>Noticed the double equal sign? It does not look good, does it.</p>
+
+<p>So to allow 8-bit characters to be used in the filename parameter another extension was introduced, <a href="http://tools.ietf.org/html/rfc2184">RFC2184</a> that describes the parameter continuation extension for encoded words. It kind of looks like urlencoding (in that it uses percent signs instead of equal signs) and uses single quotes instead of question marks for separating different parts of the encoded value. In addition you can split the value into numbered parts.</p>
+
+<p>So lets say we want to use filename "Jõgeva Mõhk ja Tölpa.pdf". Surely looks like it needs some special treatment as it includes non-ascii characters. Encoded words extension to the rescue!</p>
+
+<pre><code>Content-Disposition: attachment;
+    filename*0*=iso-8859-1''J%F5geva%20M%F5hk;
+    filename*1*=%20ja%20T%F6lpa.pdf
+</code></pre>
+
+<p>As you can see we now have a Latin-1 string converted into urlencoding and split into two numbered parts (parts 0 and 1). The two single quotes after the charset name and before the value include a missing second argument, the language used in the encoded string. No one seems to care about this, so in most cases it is just left blank. The asterisk in the end of the parameter name indicates that the value is encoded. If we left out the asterisks we could use this technique for splitting long values. As if this were not cool enough, we can now mix the numbered parts with and without trailing asterisks. The only rule is that if there is even a single encoded part, then the very first part needs to be encoded as well.</p>
+
+<pre><code>Content-Disposition: attachment;
+    filename*0*=iso-8859-1''J%F5geva%20M%F5;
+    filename*1="hk ja T";
+    filename*2*=%F6lpa.pdf
+</code></pre>
+
+<p>As one can see, using unicode is a mess and this is only the beginning. To give JavaScript developers easy access for writing their own e-mail client software and to relieve the developers from the constant burden of checking the RFCs, we at Whiteout released a project called <a href="http://emailjs.org/">email.js</a>. </p>
+
+<p>Email.js is an open source toolbox for writing email applications in JavaScript. </p>
+
+<p>You get an IMAP and SMTP clients and a message builder and a parser. Most apps are plain HTML5, CSS and JavaScript anyway by now, so being able to use low level e-mail libraries can probably help a lot. The only missing thing from the normal browser environment that is required is the TCP access, as you cannot turn directly to an e-mail server from a web page. But for web pages running in browser extension mode, TCP is totally accessible. Connect to port 143 and start talking IMAP.</p>
+
+<blockquote>
+  <p>As for schadenfreude, the same might be even worse for HTTP – good luck setting unicode filenames of downloads reliably. The standard for it, <a href="http://tools.ietf.org/html/rfc5987">RFC5987</a> which is similar to the encoded word extensions, was released only in 2010 which means that while it might be supported by the newest browser it definitely does not work in IE8 and other older browsers.</p>
+</blockquote>
+
+<hr>
+
+<p><strong>Update.</strong> The original post used quotes around the values for <em>filename*X*</em> which is not allowed. Quotes are only allowed for unencoded <em>filename*X</em> values but not for the encoded ones.</p>
+        </section>
+
+        <footer class="post-footer">
+
+
+            <figure class="author-image">
+                <a class="img" href="../../../../author/andris/" style="background-image: url(../../../../content/images/2015/02/132242.jpg)"><span class="hidden">Andris Reinman's Picture</span></a>
+            </figure>
+
+            <section class="author">
+                <h4><a href="../../../../author/andris/">Andris Reinman</a></h4>
+
+                    <p>Our company was founded in 2013 in Munich. Our mission is to provide secure email that is easy to use and runs on all devices.</p>
+                <div class="author-meta">
+                    <span class="author-location icon-location">Tallinn, Estonia</span>
+                    <span class="author-link icon-link"><a href="https://whiteout.io">https://whiteout.io</a></span>
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/share?text=email.js%20-%20The%20Hard%20Thing%20About%20Old%20Things&amp;via=whiteoutio&amp;url=http://blog.whiteout.io/2014/07/01/emailjs-the-hard-thing-about-old-things/" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.whiteout.io/2014/07/01/emailjs-the-hard-thing-about-old-things/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://blog.whiteout.io/2014/07/01/emailjs-the-hard-thing-about-old-things/" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+
+        </footer>
+
+    </article>
+
+</main>
+
+
+
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="../../../../">Whiteout Networks</a> © 2016</section>
+        <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
+    </footer>
+
+    <!-- You can safely delete this line if your theme does not require jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+    <script type="text/javascript" src="../../../../assets/js/jquery.fitvids.js?v=2c7faa2464"></script>
+    <script type="text/javascript" src="../../../../assets/js/index.js?v=2c7faa2464"></script>
+
+<img src="https://blog.whiteout.io/view.gif?page=/2014/07/01/emailjs-the-hard-thing-about-old-things/" alt="" style="display:none" hidden>
+</body>

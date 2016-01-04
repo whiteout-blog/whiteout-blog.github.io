@@ -1,0 +1,195 @@
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>PGP: There’s Life In The Old Dog Yet.</title>
+    <meta name="description" content="">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="../../../../favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="../../../../assets/css/screen.css?v=2c7faa2464">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic%7COpen+Sans:700,400">
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-52535674-2', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+    <link rel="canonical" href="index.html">
+    <meta name="referrer" content="origin">
+    
+    <meta property="og:site_name" content="Whiteout Networks">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="PGP: There’s Life In The Old Dog Yet.">
+    <meta property="og:description" content="Email is the most sensitive and private form of electronic communication. Better protect it from prying eyes. By applying strong encryption. That we can agree on. The good news: The PGP standard for email encryption has been around for what...">
+    <meta property="og:url" content="http://blog.whiteout.io/2015/02/25/pgp-theres-life-in-the-old-dog-yet/">
+    <meta property="article:published_time" content="2015-02-25T12:56:40.000Z">
+    <meta property="article:modified_time" content="2015-02-25T13:35:03.000Z">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="PGP: There’s Life In The Old Dog Yet.">
+    <meta name="twitter:description" content="Email is the most sensitive and private form of electronic communication. Better protect it from prying eyes. By applying strong encryption. That we can agree on. The good news: The PGP standard for email encryption has been around for what...">
+    <meta name="twitter:url" content="http://blog.whiteout.io/2015/02/25/pgp-theres-life-in-the-old-dog-yet/">
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "Whiteout Networks",
+    "author": {
+        "@type": "Person",
+        "name": "Oliver Gajek",
+        "image": "http://blog.whiteout.io/content/images/2015/02/oliver-1.jpg",
+        "url": "http://blog.whiteout.io/author/oliver",
+        "sameAs": "https://whiteout.io",
+        "description": "Our company was founded in 2013 in Munich. Our mission is to provide secure email that is easy to use and runs on all devices."
+    },
+    "headline": "PGP: There’s Life In The Old Dog Yet.",
+    "url": "http://blog.whiteout.io/2015/02/25/pgp-theres-life-in-the-old-dog-yet/",
+    "datePublished": "2015-02-25T12:56:40.000Z",
+    "dateModified": "2015-02-25T13:35:03.000Z",
+    "description": "Email is the most sensitive and private form of electronic communication. Better protect it from prying eyes. By applying strong encryption. That we can agree on. The good news: The PGP standard for email encryption has been around for what..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost 0.7">
+    <link rel="alternate" type="application/rss+xml" title="Whiteout Networks" href="../../../../rss/index.html">
+</head>
+<body class="post-template">
+
+    
+
+
+<header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        <a class="back-button icon-arrow-left" href="../../../../">Home</a>
+        <a class="subscribe-button" href="https://whiteout.io">whiteout.io</a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">PGP: There’s Life In The Old Dog Yet.</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2015-02-25">25 February 2015</time> 
+            </section>
+        </header>
+
+        <section class="post-content">
+            <p>Email is the most sensitive and private form of electronic communication. Better protect it from prying eyes. By applying strong encryption. That we can agree on. The good news: The PGP standard for email encryption has been around for what feels like forever. It is not without problems, though, as Matthew Green’s <a href="http://blog.cryptographyengineering.com/2014/08/whats-matter-with-pgp.html">detailed analysis</a> points out. </p>
+
+<p>Now noted cryptographer Moxie Marlinspike has joined the discussion with a rather <a href="http://www.thoughtcrime.org/blog/gpg-and-me/">pessimistic conclusion</a>, yearning for the days when PGP will be gone from his life. </p>
+
+<p>Maybe that is going a bit too far. </p>
+
+<p>Let’s not forget what we have in PGP:</p>
+
+<ul>
+<li>It’s been around for a long time, so it’s cryptographically well understood. It is one of the very few crypto standards that we can <a href="http://www.spiegel.de/international/germany/inside-the-nsa-s-war-on-internet-security-a-1010361.html">reasonably assume</a> to be practically unbreakable.</li>
+<li>There are a variety of implementations and there is a small but vibrant and highly committed developer community.</li>
+<li>A small but active and committed user community.</li>
+<li>It works in a federated system such as email. Systems such as TextSecure and iMessage are centralized services for ephemeral communication that don’t work in a decentralized, per domain architecture. This is probably unacceptable for corporate use cases where hosting your own server and data-retention laws are must-have requirements. </li>
+<li>Unlike chat, email is offline, asynchronous by nature, and incredibly sticky. That brings completely different requirements for encryption, which the suggested alternatives like the TextSecure protocol don’t solve.</li>
+</ul>
+
+<p>Now let’s look at the problems that people point to. And, yes, these are real problems and also the reason why adoption is not more widespread:</p>
+
+<p><strong>Usability</strong>. Especially the installation, where I need to integrate my email client with a PGP add-on and a crypto toolkit and where that takes me several hours with an uncertain outcome. Not for the faint of heart. Nor for corporate users without admin privileges.</p>
+
+<p><strong>Lack of mobile device support</strong>. What good is email that doesn’t show up on all my devices. Of which the modern user typically uses more than three during the day.</p>
+
+<p><strong>Manual key management</strong>. Where to story my keys. How not to lose them. How to acquire keys for other people. Yes that can be tricky and prone to error. Even Edward Snowden himself <a href="https://firstlook.org/theintercept/2014/10/28/smuggling-snowden-secrets/">fell victim to that.</a> </p>
+
+<p><strong>Lack of forward secrecy</strong>. If my private key is compromised tomorrow an attacker will be able to read all of my past messages.</p>
+
+<p><strong>Outdated crypto primitives</strong>. Since the OpenPGP standard has grown over time, there are multiple cipher suites and packaging format that a client needs to support. This makes the protocol quite complex.</p>
+
+<p><strong>Lack of meta-data security</strong>. Sender, recipient, date/time, and the subject are all transmitted in the clear.</p>
+
+<p>At least some of theses challenges can be addressed without reinventing the whole wheel.</p>
+
+<p>We are developing a <strong>consumer-grade, mobile-first email client</strong> that has everything in one package. Easy to install, easy to use. And with no software to be installed on your PC and all traffic tunneled via HTTPS also ready to go for a corporate environment.</p>
+
+<p>We make the client available on <strong>all relevant platforms,</strong> desktop, Chromebook, Android, iOS, Windows phone. </p>
+
+<p>And we offer an <strong>integrated key management</strong> that makes the whole process invisible to Whiteout users while still supporting interoperability with existing PGP/GPG users. More <a href="../../06/making-pgp-key-management-invisible-so-johnny-can-encrypt/">here</a>.</p>
+
+<p>Take a look at Whiteout Mail here:  <a href="https://whiteout.io/">https://whiteout.io/</a>.</p>
+
+<p>It also seems that we’re not alone in our commitment to PGP. The <a href="https://gnupg.org/index.html">recent strong reaction</a> from the community and the industry to the reports that key developer Werner Koch was running out of money is encouraging.</p>
+
+<p><strong>How Do We See the Future?</strong></p>
+
+<p>In order for public key discovery to become transparent and somewhat reliable, there need to be a federated and reliable key infrastructure. Werner Koch made an interesting suggestion <a href="http://rem.eifzilla.de/archives/2015/02/24/re-die-schlssel-falle">here</a> to use the DNS system. That way mail providers could validate uploaded keys, which would give PGP client apps a reliable source of keys. <a href="https://github.com/google/end-to-end/wiki/Key-Distribution">Other projects</a> are working on making the key distribution itself more reliable than the unauthenticated write-only storage HKP servers are currently. Applications could hide public key discovery completely from users which would allow for a UX that is similar to iMessage or TextSecure without throwing the whole SMTP/MIME transport layer overboard (which is likely to stay with us for the next 10-20 years).</p>
+
+<p>And while we do agree that there needs to be a standard for email encryption that goes beyond PGP we believe it will be quite a while before we will have a robust alternative. Early efforts such as Dark Mail, TextSecure and others, may be important contributions, but it still feels like early days.</p>
+
+<p>In fact, when we consider the key requirements for email, among them decentralized deployment and administration and the ability to store old conversations and to access them from any device, the new standard may just turn out to be very similar to SMTP and PGP. </p>
+        </section>
+
+        <footer class="post-footer">
+
+
+            <figure class="author-image">
+                <a class="img" href="../../../../author/oliver/" style="background-image: url(../../../../content/images/2015/02/oliver-1.jpg)"><span class="hidden">Oliver Gajek's Picture</span></a>
+            </figure>
+
+            <section class="author">
+                <h4><a href="../../../../author/oliver/">Oliver Gajek</a></h4>
+
+                    <p>Our company was founded in 2013 in Munich. Our mission is to provide secure email that is easy to use and runs on all devices.</p>
+                <div class="author-meta">
+                    <span class="author-location icon-location">Munich, Germany</span>
+                    <span class="author-link icon-link"><a href="https://whiteout.io">https://whiteout.io</a></span>
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/share?text=PGP%3A%20There%E2%80%99s%20Life%20In%20The%20Old%20Dog%20Yet.&amp;via=whiteoutio&amp;url=http://blog.whiteout.io/2015/02/25/pgp-theres-life-in-the-old-dog-yet/" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.whiteout.io/2015/02/25/pgp-theres-life-in-the-old-dog-yet/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://blog.whiteout.io/2015/02/25/pgp-theres-life-in-the-old-dog-yet/" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+
+        </footer>
+
+    </article>
+
+</main>
+
+
+
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="../../../../">Whiteout Networks</a> © 2016</section>
+        <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
+    </footer>
+
+    <!-- You can safely delete this line if your theme does not require jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+    <script type="text/javascript" src="../../../../assets/js/jquery.fitvids.js?v=2c7faa2464"></script>
+    <script type="text/javascript" src="../../../../assets/js/index.js?v=2c7faa2464"></script>
+
+<img src="https://blog.whiteout.io/view.gif?page=/2015/02/25/pgp-theres-life-in-the-old-dog-yet/" alt="" style="display:none" hidden>
+</body>

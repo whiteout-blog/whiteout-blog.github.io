@@ -1,0 +1,7 @@
+User-agent: *
+Sitemap: http://blog.whiteout.io/sitemap.xml
+Disallow: /ghost/
+
+
+User-agent: *
+Disallow: /view.gif

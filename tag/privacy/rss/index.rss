@@ -1,0 +1,193 @@
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" version="2.0"><channel><title>Privacy - Whiteout Networks</title><description>Our company was founded in 2013 in Munich. Our mission is to provide secure email that is easy to use and runs on all devices.</description><link>http://blog.whiteout.io/</link><generator>Ghost 0.7</generator><lastBuildDate>Mon, 04 Jan 2016 04:53:34 GMT</lastBuildDate><atom:link href="http://blog.whiteout.io/tag/privacy/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title>Secure PGP Key Sync - A Proposal</title><description>&lt;p&gt;In today's multi device world it's absolutely mandatory that the user's data be available on all screens at all times. Yet secure email protocols such as PGP were designed more than 20 years ago. This means that for encrypted email the status quo up until now has basically been: Either&lt;/p&gt;</description><link>http://blog.whiteout.io/2014/07/07/secure-pgp-key-sync-a-proposal/</link><guid isPermaLink="false">985acaa6-4710-4d5e-b9fa-e9a17db9ac5a</guid><category>Security</category><category>Privacy</category><dc:creator>Tankred Hase</dc:creator><pubDate>Mon, 07 Jul 2014 13:27:45 GMT</pubDate><content:encoded>&lt;p&gt;In today's multi device world it's absolutely mandatory that the user's data be available on all screens at all times. Yet secure email protocols such as PGP were designed more than 20 years ago. This means that for encrypted email the status quo up until now has basically been: Either you're on the device your key is on or you’re out of luck. Like this poor sap that got an encrypted email on his iPhone:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://blog.whiteout.io/content/images/2015/02/iPhone-Mail-1.PNG" alt="PGP encrypted message on iPhone"&gt;&lt;/p&gt;
+
+&lt;p&gt;Needless to say there are many ways to go about solving this problem. One could simply throw out the last 30 years of protocols like SMTP, IMAP and PGP and reinvent the wheel like &lt;a href="http://darkmail.info/"&gt;DarkMail&lt;/a&gt;, but we at Whiteout believe in building on existing standards, since they aren't going away any time soon. This does not mean that we don't applaud the important work of creating a modern set of protocols for asynchronous messaging that solve meta-data security and forward secrecy. But given today's landscape, the large-scale adoption of such an approach is years away. In this post we'd like to discuss our approach at tackling multi device encrypted email.&lt;/p&gt;
+
+&lt;h2 id="theburdenofkeymanagement"&gt;The burden of key management&lt;/h2&gt;
+
+&lt;p&gt;Studies have shown time and time again that if users are exposed to the complexities of managing their own keys, many will fail.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;"Three of the twelve test participants (P4, P9, and P11) accidentally emailed the secret to the team members without encryption. Two of the three (P9 and P11) realized immediately that they had done so, but P4 appeared to believe that the security was supposed to be transparent to him and that the encryption had taken place. In all three cases the error occurred while the participants were trying to figure out the system by exploring." - &lt;em&gt;&lt;a href="http://www.gaudior.net/alma/johnny.pdf"&gt;Why Johnny Can’t Encrypt: A Usability Evaluation of PGP 5.0&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This is why we, as a service provider for encrypted email, believe that one major way we can provide value to users is key management. Not only does Whiteout Mail automate public key discovery when typing in a recipient's email address, we also want to make private key management so easy that it becomes basically invisible to users (unless users explicitly want to dig deeper, of course).&lt;/p&gt;
+
+&lt;h2 id="whiteoutkeysyncuserexperiencetechnologypreview"&gt;Whiteout Key Sync User Experience - Technology Preview&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;DISCLAIMER: The following specification as well as the current version of the reference implementation are definitely work in progress and should not yet be considered for production use. We reserve the right to delete private keys from our sync service during the experimental phase in case we need to update our storage format or encryption protocol. We would also very much appreciate any feedback and suggestions. Feel free to &lt;a href="https://twitter.com/whiteoutio"&gt;tweet&lt;/a&gt; us or drop us &lt;a href="mailto:mail.support@whiteout.io"&gt;an email&lt;/a&gt; (&lt;a href="https://keys.whiteout.io/mail.support@whiteout.io"&gt;PGP Key&lt;/a&gt;).&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Now that we've got that out of the way, if you're feeling adventurous you can try key sync today by installing the &lt;a href="https://whiteout.io/#product"&gt;Whiteout Mail App&lt;/a&gt; and syncing your test keys between e.g. your Desktop PC and your Chromebook (Android App coming very soon). The setup process itself borrows heavily from existing products like Firefox Sync and the iCloud keychain from Apple. Both products allow users to sync their passwords and other personal data in an encrypted form.&lt;/p&gt;
+
+&lt;p&gt;It's important to note that multi device sync for Whiteout Mail is completely optional. We understand that there are users that would never sync their private PGP key (even in encrypted form) and we absolutely respect that. But if you do want to use Whiteout Mail on multiple devices, then here's what the user experience for Whiteout Key Sync looks like:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The user starts Whiteout Mail on the Computer they first installed the app on. Either the app generated a new PGP key pair for the user on initial startup (default behavior for average users and first time PGPers) or the user chose to import an existing PGP key (option for experienced PGP users). The user must then activate &lt;code&gt;Key sync&lt;/code&gt; from the menu and is greeted with this setup screen:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src="http://blog.whiteout.io/content/images/2015/02/Keychain-code-setup.png" alt="Key sync setup"&gt;&lt;/p&gt;
+
+&lt;p&gt;In this step a random &lt;code&gt;keychain code&lt;/code&gt; is generated for the user which is used to encrypt the user’s private key on their computer before sync. From a UX perspective the code basically replaces the private PGP key, as the user must write down the &lt;code&gt;keychain code&lt;/code&gt; and keep it in a safe place.&lt;/p&gt;
+
+&lt;p&gt;The code is never shared or made available to Whiteout, so we cannot decrypt the user’s PGP key. The idea here is that the long asymmetric PGP key is replaced by a short (but still high-entropy) symmetric key, which can be written down easily and typed into a touch screen. (For all the technical details, please check out the protocol specification at the end of this post.)&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The user then installs the Whiteout Mail app on a new device. If sync was activated for his account the app will know this and ask the user for a recovery token which is sent to them via Email or SMS:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src="http://blog.whiteout.io/content/images/2015/02/Recovery-token-input-2.png" alt="Recovery token input on Nexus 5"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;After the user has been authenticated, they will be asked to provide their keychain code. Upon successful entry, the encrypted private PGP key will be sent to the device, decrypted locally and stored on the device.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src="http://blog.whiteout.io/content/images/2015/02/Keychain-code-input-1.png" alt="Keychain code input on Nexus 5"&gt;&lt;/p&gt;
+
+&lt;p&gt;And done! The user can now read and write encrypted messages on multiple devices.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://blog.whiteout.io/content/images/2015/02/Mail-list-Nexus-5-1.png" alt="Mail list on Nexus 5"&gt;&lt;/p&gt;
+
+&lt;p&gt;It's important to note that this setup process is required only once when setting up the new device. This means that the keychain code can conveniently be kept in a safe place and does not have to be with the user at all times.&lt;/p&gt;
+
+&lt;p&gt;Now that we've briefly touched what the user experience looks like, here's a  technical overview of the encryption protocol.&lt;/p&gt;
+
+&lt;h2 id="whiteoutprivatekeysyncspecification"&gt;Whiteout Private Key Sync Specification&lt;/h2&gt;
+
+&lt;p&gt;Importing/exporting the user’s private PGP key to their various devices is a challenge on non desktop systems such as iOS, as these system have no USB support. Current solutions such as iPGP can import the user’s private key through Dropbox, but this obviously compromises the private key to a cloud storage provider that the user has no control over. The goal of this specification is to create a secure and easy way to sync the user’s private key over a cloud service that the user does not have to trust completely.&lt;/p&gt;
+
+&lt;p&gt;This specification is split up into the various protocol steps required for key sync.&lt;/p&gt;
+
+&lt;h3 id="deviceregistration"&gt;Device Registration&lt;/h3&gt;
+
+&lt;h4 id="scope"&gt;Scope&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The device configuration protocol MUST NOT allow multiple devices with the same DeviceSecret.&lt;/li&gt;
+&lt;li&gt;The device configuration protocol MUST NOT allow a device to impersonate another one just with the knowledge of its DeviceSecret.&lt;/li&gt;
+&lt;li&gt;The device configuration protocol MUST NOT allow a new device to be configured without the possession of the user's keypair.&lt;/li&gt;
+&lt;li&gt;The device configuration protocol WILL NOT protect a user from a possible rogue server authorizing devices on the user's behalf.&lt;/li&gt;
+&lt;li&gt;The device configuration protocol WILL NOT protect the user from an attacker stealing the DeviceSecret from the server and impersonating the device for that DeviceSecret.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id="description"&gt;Description&lt;/h4&gt;
+
+&lt;p&gt;Device registration will exploit the fact that both the user and the server have the user's public key, and the user has the private key. With this knowledge, the server will negotiate a set of random session keys to exchange and authenticate the data sent between the parties.&lt;/p&gt;
+
+&lt;p&gt;A device is referenced by its DeviceSecret and memorable DeviceName. The device secret is a globally unique random string with 256 bits of entropy that is generated using a RNG on the device to avoid collisions. The registration will proceed as showed in the flow diagrams below.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://blog.whiteout.io/content/images/2015/02/diagram_1-1.png" alt="Device secret generation"&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://blog.whiteout.io/content/images/2015/02/diagram_2-1.png" alt="Device Registration"&gt;&lt;/p&gt;
+
+&lt;h3 id="authentication"&gt;Authentication&lt;/h3&gt;
+
+&lt;h4 id="scope"&gt;Scope&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The authentication protocol MUST protect the DeviceSecret from being reachable by a third party in transit.&lt;/li&gt;
+&lt;li&gt;The authentication protocol MUST protect the session keys from being reachable by a third party in transit.&lt;/li&gt;
+&lt;li&gt;The authentication protocol MUST avoid reusing session keys.&lt;/li&gt;
+&lt;li&gt;The authentication protocol WILL NOT allow authentication without the user having possession of their key pair.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id="description"&gt;Description&lt;/h4&gt;
+
+&lt;p&gt;The authentication will exploit the same fact as device registration: using the public key for the user, the server will negotiate a set of session keys to secure future communications. The fact that the user will be able to decrypt the data sent from the server proves that she is the rightful owner of the account.&lt;/p&gt;
+
+&lt;p&gt;Authentication will have, along with the random keys, a challenge that the client needs to respond to. The test for the user is to just send the challenge string back to the server, but wrapped with a different encryption method.&lt;/p&gt;
+
+&lt;p&gt;Once these steps are complete, both the server and the client will have negotiated keys for this session.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://blog.whiteout.io/content/images/2015/02/diagram_3-1.png" alt="Authentication"&gt;&lt;/p&gt;
+
+&lt;h3 id="keysync"&gt;Key Sync&lt;/h3&gt;
+
+&lt;h4 id="scope"&gt;Scope&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The key sync protocol MUST protect the private key from any other party that's not the rightful owner of it, even the server.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id="description"&gt;Description&lt;/h4&gt;
+
+&lt;p&gt;Key synchronization will be done by uploading the key pair encrypted to the Whiteout cloud storage. The key pair will be encrypted with a randomly generated key which will be presented to the user in the form of a QR code or a string of characters. This set of keys will not be uploaded to the cloud, so the key pair will be secure.&lt;/p&gt;
+
+&lt;p&gt;To download the encrypted key pair, the user will request the recovery token that the server assigned to the key at the time of the request. This recovery token will be sent to the user through SMS or email (depending on what is available). With it, the client can download the key pair and use the encryption keys to decipher and import it.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://blog.whiteout.io/content/images/2015/02/diagram_4-1.png" alt="Key sync"&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://blog.whiteout.io/content/images/2015/02/diagram_5-2-1.png" alt="Key sync"&gt;&lt;/p&gt;
+
+&lt;h3 id="diagramreference"&gt;Diagram Reference&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Es(key, data)&lt;/strong&gt;: Symmetric encrypt with key. &lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Ea(key, data)&lt;/strong&gt;: Asymmetric encrypt data with a public PGP key.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Ds(key, ciphertext)&lt;/strong&gt;: Symmetric decrypt ciphertext using key.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Pk&lt;/strong&gt;: User’s public PGP key.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;session_keys&lt;/strong&gt;: random encryption keys generated for a session.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id="cipherselection"&gt;Cipher selection&lt;/h3&gt;
+
+&lt;h4 id="blockcipherandmessageauthentication"&gt;Block cipher and message authentication&lt;/h4&gt;
+
+&lt;p&gt;The protocol uses the authenticated &lt;a href="http://en.wikipedia.org/wiki/Galois/Counter_Mode"&gt;AES-256-GCM&lt;/a&gt; mode for symmetric encryption.&lt;/p&gt;
+
+&lt;h4 id="keyderivationforprivatekeyencryption"&gt;Key derivation for private key encryption&lt;/h4&gt;
+
+&lt;p&gt;The private key is encrypted with a 256 bit symmetric key derived from a high entropy code (which is generated for the user) using &lt;a href="http://en.wikipedia.org/wiki/PBKDF2"&gt;PBKDF2-SHA256&lt;/a&gt; (10000 iterations, per user random salt).&lt;/p&gt;
+
+&lt;h4 id="asymmetriccipher"&gt;Asymmetric cipher&lt;/h4&gt;
+
+&lt;p&gt;For asymmetric encryption, &lt;a href="http://en.wikipedia.org/wiki/Pretty_Good_Privacy"&gt;PGP&lt;/a&gt; is used. Key size should be at least 2048 bits.&lt;/p&gt;</content:encoded></item><item><title>How we operate</title><description>&lt;p&gt;The Snowden publications gave rise to a new breed of applications and services, most of which follow Bruce Schneier's advice: "Encrypt everything". Still, not all of those are created equal. Some weigh convenience over privacy, others provide anonymity. Some focus on ease of use, others are tools for crypto experts.&lt;/p&gt;</description><link>http://blog.whiteout.io/2014/06/12/how-we-operate/</link><guid isPermaLink="false">d6a3a88c-b495-4204-8b0e-a0a53aa09d4b</guid><category>Privacy</category><dc:creator>Felix Hammerl</dc:creator><pubDate>Thu, 12 Jun 2014 08:51:24 GMT</pubDate><content:encoded>&lt;p&gt;The Snowden publications gave rise to a new breed of applications and services, most of which follow Bruce Schneier's advice: "Encrypt everything". Still, not all of those are created equal. Some weigh convenience over privacy, others provide anonymity. Some focus on ease of use, others are tools for crypto experts. Different needs for privacy or anonymity require a refined set of rules to make a choice for one service over another.&lt;/p&gt;
+
+&lt;p&gt;At Whiteout Networks, we strongly believe that privacy and ease of use is what sets us apart. The services provided by Whiteout are crafted with a particular set of rules in mind:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Your data is yours.&lt;/li&gt;
+&lt;li&gt;Your data is encrypted.&lt;/li&gt;
+&lt;li&gt;We can't read your data.&lt;/li&gt;
+&lt;li&gt;You don't need to take our word for it.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id="yourdataisyours"&gt;Your data is yours.&lt;/h2&gt;
+
+&lt;p&gt;Every user can join or leave the Whiteout services at any time. There is no artificial lock-in, you are free to take your encryption keys with you or bring your own keys. We strongly believe in open standards, especially OpenPGP which has been tested time and time again. If it is good enough for the world's leading security experts, it is good enough for us.&lt;/p&gt;
+
+&lt;p&gt;You want to bring you own encryption keys? Fine! &lt;br&gt;
+You want to stay at your current mail provider? Fine! &lt;br&gt;
+You want to be interoperable with other OpenPGP mail clients? Fine!&lt;/p&gt;
+
+&lt;h2 id="yourdataisencrypted"&gt;Your data is encrypted.&lt;/h2&gt;
+
+&lt;p&gt;No sensitive data is stored or sent in the clear. Ever. There is just no way around that and we believe that this is the only way to ensure real privacy.&lt;/p&gt;
+
+&lt;h2 id="wecantreadyourdata"&gt;We can't read your data.&lt;/h2&gt;
+
+&lt;p&gt;Encryption and decryption happens on the client and nowhere else. We take pride in providing uncompromised end-to-end encryption. If you hand over data to our services, it was encrypted by you before. If the client receives data from our Whiteout services, it will be decrypted by you. You are the only person that has access to the decryption keys, and this is the way it should be.&lt;/p&gt;
+
+&lt;p&gt;This sets us apart from other approaches, most notably the web mailers where encryption is handled for you on the server. If our services should get compromised at any point by any type of adversary, we simply can't compromise your privacy. We didn't trust ourselves when we develop our services, so you don't have to, either.&lt;/p&gt;
+
+&lt;h2 id="youdontneedtotakeourwordforit"&gt;You don't need to take our word for it.&lt;/h2&gt;
+
+&lt;p&gt;Encryption happens on the client, with the &lt;a href="https://github.com/whiteout-io/mail-html5"&gt;source code open&lt;/a&gt; for inspection. On top of that, there are regular audits by independent security and cryptography experts.&lt;/p&gt;</content:encoded></item><item><title>Email Metadata Privacy – should you care or not</title><description>&lt;p&gt;When we first heard of Edward Snowden in June 2013, we heard of the collection of metadata at Verizon. It took us a while to figure out if that was troubling. &lt;br&gt;
+Now we know that it is. Who calls whom at what time and how often reveals many things that&lt;/p&gt;</description><link>http://blog.whiteout.io/2014/05/29/email-metadata-privacy-should-you-care-or-not/</link><guid isPermaLink="false">3f85f3aa-6b99-4215-b908-3c223ab96a25</guid><category>Privacy</category><category>Metadata</category><dc:creator>Oliver Gajek</dc:creator><pubDate>Thu, 29 May 2014 10:00:00 GMT</pubDate><content:encoded>&lt;p&gt;When we first heard of Edward Snowden in June 2013, we heard of the collection of metadata at Verizon. It took us a while to figure out if that was troubling. &lt;br&gt;
+Now we know that it is. Who calls whom at what time and how often reveals many things that we may want to keep private. How often I call my doctor, priest, psychiatrist, or astrological hotline is my business and none of yours.&lt;/p&gt;
+
+&lt;p&gt;The same goes for Email where people now are asking for privacy solutions, as they have understood how personal and private this information is and that they can’t trust the promises of technology and service providers. People naturally have turned to PGP for email encryption as the widely accepted standard for protecting their private messages.&lt;/p&gt;
+
+&lt;p&gt;But, guess what, PGP only encrypts the body of your message. Subject line, sender, recipient, time, IP address, and a host of other technical details are transmitted in the clear.&lt;/p&gt;
+
+&lt;p&gt;Trouble is that they have to be in order to make their way to the intended recipient across public networks. Much like a letter that you post will have a recipient address and a return address and a post office stamp that your postman and your neighbor can inspect. So while the content of your letter will be private while sender and recipient will not be anonymous.&lt;/p&gt;
+
+&lt;p&gt;So the big question becomes if this is a problem or not. Three things to consider:&lt;/p&gt;
+
+&lt;p&gt;It’s a problem depending on what you’re afraid of. Me, I’m afraid of somebody breaking into my Gmail account and posting 10-year old messages on the web for everybody to see. Every now and then I stumble across some old message and am embarrassed by what I wrote. Nothing more, nothing less. Thankfully not in the league of &lt;a href="http://nypost.com/2013/08/03/inside-colin-powells-hot-and-heavy-e-mails/"&gt;Colin Powell and Corina Cretu&lt;/a&gt;, but still. Wouldn’t want to see the old stuff in public. And this is just embarrassment in retrospect. I don’t even know what might be embarrassing or problematic in the future. Think of being denied entry into some country where you criticized an emerging party in an email ten years ago. And now that party is in power and they have read that email. That’s the kind of stuff that worries me. Turns out that PGP encryption of my message text takes care of this very nicely. So I’ll have some of that PGP encryption and pronto.&lt;/p&gt;
+
+&lt;p&gt;Of course I’m interested in exposing even less for embarrassment or misuse. So an email provider that is very specific on metadata retention is certainly interesting. They really have no need to keep a complete record of who I communicated with and about what once the messages have been delivered. So transparency about data retention, ideally audited by independent and trustworthy experts, and completely open communication on attempted breakins and governmental requests for data access would absolutely win my business. Full disclosure: We’re working on that…&lt;/p&gt;
+
+&lt;p&gt;Since this is such a big issue we can reasonably expect for the technology industry to address the issue of encrypting metadata for email. The so-called Darkmail alliance has gotten quite a bit of press last year and may come up with an exciting technology change. We haven’t heard much from them recently so it’s a bit hard to say more. And of course it will be useful only if it turns out to be a genuine standard adopted by multiple technology and service providers.&lt;/p&gt;
+
+&lt;p&gt;In the meantime it’s probably best to apply the old 80/20 rule. If I can encrypt 80 percent of my email content with 20 percent of the effort then that’s good enough for me. That is why PGP wins for the foreseeable future.&lt;/p&gt;</content:encoded></item></channel></rss>

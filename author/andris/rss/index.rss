@@ -1,0 +1,66 @@
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" version="2.0"><channel><title>Andris Reinman - Whiteout Networks</title><description>Our company was founded in 2013 in Munich. Our mission is to provide secure email that is easy to use and runs on all devices.</description><link>http://blog.whiteout.io/</link><generator>Ghost 0.7</generator><lastBuildDate>Mon, 04 Jan 2016 04:54:25 GMT</lastBuildDate><atom:link href="http://blog.whiteout.io/author/andris/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title>email.js - The Hard Thing About Old Things</title><description>&lt;p&gt;&lt;strong&gt;tl;dr IMAP and SMTP are complex and we at Whiteout released a project called &lt;a href="http://emailjs.org/"&gt;email.js&lt;/a&gt; which is an open source toolbox for writing email applications in JavaScript.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Electronic mail seems to be all the rage now. Google published a new &lt;a href="https://developers.google.com/gmail/api/"&gt;API for Gmail&lt;/a&gt;, countless e-mail applications have emerged&lt;/p&gt;</description><link>http://blog.whiteout.io/2014/07/01/emailjs-the-hard-thing-about-old-things/</link><guid isPermaLink="false">bd10b727-7c61-4adb-85fa-44f666edd742</guid><dc:creator>Andris Reinman</dc:creator><pubDate>Tue, 01 Jul 2014 15:04:27 GMT</pubDate><content:encoded>&lt;p&gt;&lt;strong&gt;tl;dr IMAP and SMTP are complex and we at Whiteout released a project called &lt;a href="http://emailjs.org/"&gt;email.js&lt;/a&gt; which is an open source toolbox for writing email applications in JavaScript.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Electronic mail seems to be all the rage now. Google published a new &lt;a href="https://developers.google.com/gmail/api/"&gt;API for Gmail&lt;/a&gt;, countless e-mail applications have emerged both for solving UX and security issues, transactional e-mail senders are sending out billions of messages on behalf of their customers not to speak of trillions of messages spammers are sending. And yet we are talking about a system that is decades old.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="http://tools.ietf.org/html/rfc821"&gt;RFC821&lt;/a&gt; that describes the SMTP protocol for transmitting messages from one host to another is from 1982, &lt;a href="http://tools.ietf.org/html/rfc822"&gt;RFC822&lt;/a&gt; that describes the message format is also from 1982 and &lt;a href="http://tools.ietf.org/html/rfc1123"&gt;RFC1123&lt;/a&gt; that describes how hostnames work so the SMTP server would know how to find the destination for an e-mail address is from 1989. Basically the e-mail we know today is from the '80s. Obviously there was e-mail before then, in fact it was already present for decades but not quite the same as now (&lt;a href="http://en.wikipedia.org/wiki/UUCP"&gt;UUCP&lt;/a&gt; anyone?). Any modifications to the mentioned standards are mostly backwards compatible – RFC822 knows nothing about MIME but using a RFC822 compatible client you would still be able to read the message even if it looked a bit strange.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Most of the RFCs mentioned in this article are outdated, check the currently valid version from the "Obsoleted by" header when viewing the full text of a standard.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;To be honest, past decades have not evolved e-mail protocols towards better clarity. All the updates are adding more layers of hacks on top of the old ones. Lets take a simple example – unicode in e-mails. At first only 7-bit ASCII symbols were allowed. This made it very difficult to write messages in other languages besides English. Obviously you can change an "ö" with "oe" in your message but it does not look good at best and is plain horrible or unreadable at worst.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Just to be clear there are RFCs like &lt;a href="http://tools.ietf.org/html/rfc6532"&gt;RFC6532&lt;/a&gt;, &lt;a href="http://tools.ietf.org/html/rfc6855"&gt;RFC6855&lt;/a&gt; et al. that fix the issue of using unicode in e-mails by allowing to use 8-bit UTF-8 instead of using 7-bit encodings. These standards are fairly new with limited support by the existing e-mail infrastructure so we need to rely on the older mechanisms for now.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;a href="http://tools.ietf.org/html/rfc1341"&gt;RFC1341&lt;/a&gt; introduced an encoding mechanism named Transfer-Encoding that allowed to represent non-ascii character sets using only 7-bit symbols in the message body. You now had an option to encode 8-bit characters to their hexadecimal representation (an "ö" could be represented as =F6 for Latin-1 or =C3=B6 for UTF-8) by using Quoted-Printable encoding or encoding all bytes with the binary safe Base64 encoding. These were not the only two options, you could also use yEnc or older uuencode, but in hindsight we can tell that only Quoted-Printable and Base64 took off. Quoted-Printable is used more for plain text and Base64 for attachments.&lt;/p&gt;
+
+&lt;p&gt;Now the bad thing is that Content-Transfer-Encoding which sets the byte encoding and Content-Type which sets the charset encoding only apply to the body of the message. But you probably want to use 8-bit characters in the headers as well. The subject line would be the first thing that comes into mind regarding headers and unicode. You cannot set the encoding for all the headers at once, you must do it on a value by value basis. So &lt;a href="http://tools.ietf.org/html/rfc1522"&gt;RFC1522&lt;/a&gt; introduced something called "encoded-words".&lt;/p&gt;
+
+&lt;p&gt;An encoded word looks like &lt;code&gt;=?CHARSET?Q?encoded_word?=&lt;/code&gt; and can be used inside any header text (excluding text inside quotes). &lt;em&gt;CHARSET&lt;/em&gt; defines the used charset for this string, &lt;em&gt;Q&lt;/em&gt; defines the used transfer encoding (only &lt;em&gt;Q&lt;/em&gt; for Quoted-Printable and &lt;em&gt;B&lt;/em&gt; for Base64 are allowed), and &lt;em&gt;encoded_word&lt;/em&gt; is the value in selected encoding. And to make things even messier the Quoted-Printable used is not the same that is used in the message bodies. For example, this modified encoding does not allow the usage of whitespace, so spaces are replaced with underscores. &lt;em&gt;encoded_word&lt;/em&gt; becomes &lt;em&gt;encoded word&lt;/em&gt; after decoding.&lt;/p&gt;
+
+&lt;p&gt;Remember that encoded words can not be used inside quotes. So what about header parameters? To specify an attachment filename we can add a filename parameter to the Content-Disposition header like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Content-Disposition: attachment; filename="my awesome file.txt"
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If we wanted to use encoded words and not use use quotes (as using encoded words inside quotes is not allowed) it would break the header structure:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Content-Disposition: attachment; filename==?ascii?q?my_awesome_file.txt?=
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Noticed the double equal sign? It does not look good, does it.&lt;/p&gt;
+
+&lt;p&gt;So to allow 8-bit characters to be used in the filename parameter another extension was introduced, &lt;a href="http://tools.ietf.org/html/rfc2184"&gt;RFC2184&lt;/a&gt; that describes the parameter continuation extension for encoded words. It kind of looks like urlencoding (in that it uses percent signs instead of equal signs) and uses single quotes instead of question marks for separating different parts of the encoded value. In addition you can split the value into numbered parts.&lt;/p&gt;
+
+&lt;p&gt;So lets say we want to use filename "Jõgeva Mõhk ja Tölpa.pdf". Surely looks like it needs some special treatment as it includes non-ascii characters. Encoded words extension to the rescue!&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Content-Disposition: attachment;
+    filename*0*=iso-8859-1''J%F5geva%20M%F5hk;
+    filename*1*=%20ja%20T%F6lpa.pdf
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;As you can see we now have a Latin-1 string converted into urlencoding and split into two numbered parts (parts 0 and 1). The two single quotes after the charset name and before the value include a missing second argument, the language used in the encoded string. No one seems to care about this, so in most cases it is just left blank. The asterisk in the end of the parameter name indicates that the value is encoded. If we left out the asterisks we could use this technique for splitting long values. As if this were not cool enough, we can now mix the numbered parts with and without trailing asterisks. The only rule is that if there is even a single encoded part, then the very first part needs to be encoded as well.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Content-Disposition: attachment;
+    filename*0*=iso-8859-1''J%F5geva%20M%F5;
+    filename*1="hk ja T";
+    filename*2*=%F6lpa.pdf
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;As one can see, using unicode is a mess and this is only the beginning. To give JavaScript developers easy access for writing their own e-mail client software and to relieve the developers from the constant burden of checking the RFCs, we at Whiteout released a project called &lt;a href="http://emailjs.org/"&gt;email.js&lt;/a&gt;. &lt;/p&gt;
+
+&lt;p&gt;Email.js is an open source toolbox for writing email applications in JavaScript. &lt;/p&gt;
+
+&lt;p&gt;You get an IMAP and SMTP clients and a message builder and a parser. Most apps are plain HTML5, CSS and JavaScript anyway by now, so being able to use low level e-mail libraries can probably help a lot. The only missing thing from the normal browser environment that is required is the TCP access, as you cannot turn directly to an e-mail server from a web page. But for web pages running in browser extension mode, TCP is totally accessible. Connect to port 143 and start talking IMAP.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;As for schadenfreude, the same might be even worse for HTTP – good luck setting unicode filenames of downloads reliably. The standard for it, &lt;a href="http://tools.ietf.org/html/rfc5987"&gt;RFC5987&lt;/a&gt; which is similar to the encoded word extensions, was released only in 2010 which means that while it might be supported by the newest browser it definitely does not work in IE8 and other older browsers.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;&lt;strong&gt;Update.&lt;/strong&gt; The original post used quotes around the values for &lt;em&gt;filename*X*&lt;/em&gt; which is not allowed. Quotes are only allowed for unencoded &lt;em&gt;filename*X&lt;/em&gt; values but not for the encoded ones.&lt;/p&gt;</content:encoded></item></channel></rss>

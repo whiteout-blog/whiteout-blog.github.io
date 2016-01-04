@@ -1,0 +1,207 @@
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" version="2.0"><channel><title>UX - Whiteout Networks</title><description>Our company was founded in 2013 in Munich. Our mission is to provide secure email that is easy to use and runs on all devices.</description><link>http://blog.whiteout.io/</link><generator>Ghost 0.7</generator><lastBuildDate>Mon, 04 Jan 2016 04:53:31 GMT</lastBuildDate><atom:link href="http://blog.whiteout.io/tag/ux/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title>Making PGP Key Management Invisible So Johnny Can Encrypt</title><description>&lt;p&gt;We’ve written about usability for PGP email encryption before. In a recent post we’ve touched on the &lt;a href="https://blog.whiteout.io/2015/01/29/why-alice-has-a-problem-if-bob-cant-encrypt/"&gt;usability of crypto apps&lt;/a&gt; in general and published a specification for &lt;a href="https://blog.whiteout.io/2014/07/07/secure-pgp-key-sync-a-proposal/"&gt;multi-device sync&lt;/a&gt; of a user’s private key. &lt;/p&gt;
+
+&lt;p&gt;This post will address one of the hardest problems in PGP, namely&lt;/p&gt;</description><link>http://blog.whiteout.io/2015/02/06/making-pgp-key-management-invisible-so-johnny-can-encrypt/</link><guid isPermaLink="false">ed72321f-4199-42d1-a348-3c9ef4124bd6</guid><category>UX</category><dc:creator>Tankred Hase</dc:creator><pubDate>Fri, 06 Feb 2015 18:19:11 GMT</pubDate><media:content url="http://blog.whiteout.io/content/images/2015/02/Bildschirmfoto-2015-02-06-um-19-28-22-1.png" medium="image"/><content:encoded>&lt;img src="http://blog.whiteout.io/content/images/2015/02/Bildschirmfoto-2015-02-06-um-19-28-22-1.png" alt="Making PGP Key Management Invisible So Johnny Can Encrypt"&gt;&lt;p&gt;We’ve written about usability for PGP email encryption before. In a recent post we’ve touched on the &lt;a href="https://blog.whiteout.io/2015/01/29/why-alice-has-a-problem-if-bob-cant-encrypt/"&gt;usability of crypto apps&lt;/a&gt; in general and published a specification for &lt;a href="https://blog.whiteout.io/2014/07/07/secure-pgp-key-sync-a-proposal/"&gt;multi-device sync&lt;/a&gt; of a user’s private key. &lt;/p&gt;
+
+&lt;p&gt;This post will address one of the hardest problems in PGP, namely key discovery of a contact’s public key.&lt;/p&gt;
+
+&lt;h2 id="uxvssecuritytradeoff"&gt;UX vs. Security Tradeoff&lt;/h2&gt;
+
+&lt;p&gt;Much has been written about the usability of PGP. Recently Matthew Green wrote a &lt;a href="http://blog.cryptographyengineering.com/2014/08/whats-matter-with-pgp.html"&gt;great post&lt;/a&gt; titled &lt;em&gt;What's the matter with PGP?&lt;/em&gt;. The post talks a lot about technical aspects of the protocol, but also about what should be addressed in terms of usability for key management:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;A proper approach to key management.&lt;/strong&gt; This could be anything from centralized key management as in Apple's iMessage -- which would still be better than nothing -- to a decentralized (but still usable) approach like the one offered by Signal or OTR. Whatever the solution, in order to achieve mass deployment, keys need to be made much more manageable or else submerged from the user altogether.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;I agree completely. It’s not the user’s fault that the protocol is so complicated and they shouldn’t be burdened with it. That’s why we’ve added automatic public key lookup for incoming and outgoing messages in our PGP mail client &lt;a href="https://whiteout.io/"&gt;Whiteout Mail&lt;/a&gt;. &lt;/p&gt;
+
+&lt;p&gt;Here’s a look at how it works.&lt;/p&gt;
+
+&lt;h2 id="howwhiteoutmailpublickeydiscoveryworks"&gt;How Whiteout Mail Public Key Discovery Works&lt;/h2&gt;
+
+&lt;p&gt;Up until now, Whiteout Mail had it’s own closed key server under &lt;a href="https://keys.whiteout.io"&gt;keys.whiteout.io&lt;/a&gt;. We basically did what Matthew Green proposed. We created a centralized authority that would accept an uploaded public key only after validating a user’s email address (proving ownership of the key). Keys were fetched automatically while reading and writing in Whiteout Mail and messages were encrypted by default. This worked quite well, but only from Whiteout user to Whiteout user. If users wanted to write PGP messages to non-whiteout users, they would have to find the recipient’s public PGP key and manually import it as a file. This is not only tedious but also impossible on platforms like iOS, where apps don’t have access to the filesystem.&lt;/p&gt;
+
+&lt;p&gt;So users asked for support of standard &lt;a href="http://en.wikipedia.org/wiki/Key_server_%28cryptographic%29"&gt;HKP key servers&lt;/a&gt; and there was a &lt;a href="https://github.com/whiteout-io/mail-html5/issues/236"&gt;discussion&lt;/a&gt; on how to best handle key import.&lt;/p&gt;
+
+&lt;h3 id="automatichkplookupinwhiteoutmail"&gt;Automatic HKP Lookup in Whiteout Mail&lt;/h3&gt;
+
+&lt;p&gt;We felt strongly that encryption should just work for average users and that most should never be exposed to key management in the first place. Here’s what we came up with:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;When a user composes a new message to a recipient’s email address, the client first queries the local keychain. This keychain includes cached keys imported from any source.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;If the recipient’s key is not found in the local key ring the client then queries our own key server. These keys have been validated by our key server to ensure recipient key ownership.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;If there is no key for the recipient on our key server, a list of well known HKP key servers (e.g. pgp.mit.edu) is queried. If a key is found, it is imported to the local key ring by a TOFU (trust on first use) principle.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;If a key is found, it will be used to encrypt the message. The user will also be notified in the UI by changing the color from red (insecure) to blue (secure).&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;"But what if an attacker uploads a fake public key to pgp.mit.edu and users don’t notice?"&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;For most users this is not an issue as the attacker would need access to the recipient’s mailbox to decrypt the message (which has been encrypted to the wrong key). It depends on the type of attacker of course. State level adversaries can intercept a message in transit. But this implies an active/targeted attack. If this is your threat model, you will want to verify the PGP key fingerprint over a second channel anyway. Most users on the other hand would be helped by protecting them against a passive adversary like dragnet surveillance.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;So why design our encryption solution for an edge case and ignore the common case which would lead to a more usable experience for the masses?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Even with TOFU key lookup, users can later always navigate to the contacts menu and verify a recipient’s key fingerprint if they need to. There is a trade off between security and usability here. But users get transparency when they need it and it's as painless as possible in most cases.&lt;/p&gt;
+
+&lt;p&gt;In practice encrypting to the wrong key will most likely cause the recipient to reply with something like this:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;"Hey, can't read your message. Did you use my current key? Here you go... "&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This is the only case the user will need to be exposed to key management. For this case Whiteout Mail offers key import via copy/paste, file import, or manual HKP server lookup. Once the correct key is imported, all future conversations between those users will be encrypted correctly.&lt;/p&gt;
+
+&lt;h3 id="tofutrustonfirstuseworks"&gt;TOFU (Trust On First Use) Works&lt;/h3&gt;
+
+&lt;p&gt;Sysadmins use TOFU everyday when they login to a new host via ssh. This is what the workflow for most users feels like:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://blog.whiteout.io/content/images/2015/02/Bildschirmfoto-2015-02-07-um-18-17-08.png" alt="Making PGP Key Management Invisible So Johnny Can Encrypt"&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;ol&gt;
+  &lt;li&gt;Type &lt;strong&gt;ssh username@hostname&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;Read a security warning with some random characters  &lt;/li&gt;
+  &lt;li&gt;Type &lt;strong&gt;yes&lt;/strong&gt; ... because &lt;em&gt;"who checks that stuff anyway"&lt;/em&gt;&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Do you always confirm the RSA fingerprint when ssh'ing into a new machine? If we are brutally honest with ourselves, this is how encryption systems are being used out there in the wild. But it's still more secure than using a plaintext connection over telnet.&lt;/p&gt;
+
+&lt;h2 id="howweimplementedhkpsupportforwhiteoutmail"&gt;How We Implemented HKP Support for Whiteout Mail&lt;/h2&gt;
+
+&lt;p&gt;Before integrating HKP support, we looked at current key server implementations and saw that it wasn’t possible to integrate them into our app, due to some missing features.&lt;/p&gt;
+
+&lt;h3 id="missingfeaturesinhkptoday"&gt;Missing features in HKP today&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;No SSL support&lt;/li&gt;
+&lt;li&gt;Bad availability/scalability&lt;/li&gt;
+&lt;li&gt;No email address validation of uploaded keys&lt;/li&gt;
+&lt;li&gt;No CORS support (&lt;a href="http://lists.gnupg.org/pipermail/gnupg-users/2014-April/049446.html"&gt;see here&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We couldn’t make cross origin requests to HKP servers from the web version of our app. So instead we decided to use our current key server as a proxy and query multiple HKP servers for maximum availability and performance. Here’s a quick summary of our current key server architecture:&lt;/p&gt;
+
+&lt;h3 id="whiteoutpublickeyserver"&gt;Whiteout Public Key Server:&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Modern REST style api&lt;/li&gt;
+&lt;li&gt;SSL only&lt;/li&gt;
+&lt;li&gt;CORS support&lt;/li&gt;
+&lt;li&gt;Email address validation of uploaded key&lt;/li&gt;
+&lt;li&gt;Automatic lookup on multiple HKP servers (first request wins)&lt;/li&gt;
+&lt;li&gt;Automatic upload of public keys to HKP servers (after validation on our server)&lt;/li&gt;
+&lt;li&gt;Autoscaling application server&lt;/li&gt;
+&lt;li&gt;MongoDB cluster&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id="restapi"&gt;REST API:&lt;/h3&gt;
+
+&lt;p&gt;Host: &lt;strong&gt;&lt;a href="https://keys.whiteout.io"&gt;https://keys.whiteout.io&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h4 id="fetchkeyget"&gt;Fetch key (GET)&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;By email (short hand)
+&lt;strong&gt;/:emailAddress&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;By email (long)
+&lt;strong&gt;/publickey/user/:emailAddress&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;By key ID
+&lt;strong&gt;/publickey/key/:keyId&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id="uploadkeyput"&gt;Upload key (PUT)&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Upload new key
+&lt;strong&gt;/publickey/user/:emailAddress/key/:keyId&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id="summary"&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;Using this api any PGP user (even non-Whiteout users) can link their pgp key with &lt;strong&gt;&lt;a href="https://keys.whiteout.io/emailAddress"&gt;https://keys.whiteout.io/emailAddress&lt;/a&gt;&lt;/strong&gt;. And any pgp user will be able to send and receive encrypted messages with Whiteout users, since HKP support goes both ways.&lt;/p&gt;
+
+&lt;p&gt;The main advantage to the approach is that encryption will just work. Technically savvy GPG users will be able to send and receive messages with average users like Johnny. Can't get your Johnny to use GPG? Just send him over to &lt;a href="https://mail.whiteout.io"&gt;mail.whiteout.io&lt;/a&gt; and leave your GPG setup untouched.&lt;/p&gt;
+
+&lt;p&gt;We look forward to your feedback and ideas. Please don't hesitate to ring us up on &lt;a href="https://twitter.com/whiteoutio"&gt;twitter&lt;/a&gt; or via &lt;a href="mailto:info@whiteout.io"&gt;mail&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Happy encrypting!&lt;/p&gt;</content:encoded></item><item><title>Why Alice has a problem if Bob can't encrypt</title><description>&lt;p&gt;I listened to many good talks at the 31st Chaos Communication Congress in Hamburg (GER) last December. I was especially impressed by &lt;a href="http://media.ccc.de/browse/congress/2014/31c3_-_6154_-_en_-_saal_1_-_201412272300_-_crypto_tales_from_the_trenches_-_nadia_heninger_-_julia_angwin_-_laura_poitras_-_jack_gillum.html#video"&gt;"Crypto Tales from the Trenches"&lt;/a&gt; by Nadia Heninger, Julia Angwin, Laura Poitras, and Jack Gillum, and &lt;a href="http://media.ccc.de/browse/congress/2014/31c3_-_6258_-_en_-_saal_1_-_201412282030_-_reconstructing_narratives_-_jacob_-_laura_poitras.html#video"&gt;"Reconstructing narratives"&lt;/a&gt; by Jacob Appelbaum and Laura Poitras. That got me thinking&lt;/p&gt;</description><link>http://blog.whiteout.io/2015/01/29/why-alice-has-a-problem-if-bob-cant-encrypt/</link><guid isPermaLink="false">3a6fcebb-29f3-4eea-a9ee-b26861986bd5</guid><category>UX</category><dc:creator>Felix Hammerl</dc:creator><pubDate>Thu, 29 Jan 2015 09:43:15 GMT</pubDate><content:encoded>&lt;p&gt;I listened to many good talks at the 31st Chaos Communication Congress in Hamburg (GER) last December. I was especially impressed by &lt;a href="http://media.ccc.de/browse/congress/2014/31c3_-_6154_-_en_-_saal_1_-_201412272300_-_crypto_tales_from_the_trenches_-_nadia_heninger_-_julia_angwin_-_laura_poitras_-_jack_gillum.html#video"&gt;"Crypto Tales from the Trenches"&lt;/a&gt; by Nadia Heninger, Julia Angwin, Laura Poitras, and Jack Gillum, and &lt;a href="http://media.ccc.de/browse/congress/2014/31c3_-_6258_-_en_-_saal_1_-_201412282030_-_reconstructing_narratives_-_jacob_-_laura_poitras.html#video"&gt;"Reconstructing narratives"&lt;/a&gt; by Jacob Appelbaum and Laura Poitras. That got me thinking about the state of crypto in 2015 and the hard parts of developing a cryptosystem for the real world.&lt;/p&gt;
+
+&lt;p&gt;This post sets out to explain the merits of cryptography ("The Good") and how to apply the lessons learned ("The Bad").&lt;/p&gt;
+
+&lt;h1 id="thegood"&gt;The Good&lt;/h1&gt;
+
+&lt;p&gt;More open-source initatives are working towards an encrypted future than ever before. This is a good thing! This shows a stronger level of interest and activity anyone would have expected prior to June 2013.&lt;/p&gt;
+
+&lt;p&gt;A crypto-anarchist's dream is an ideal world where everybody would communicate in encrypted form. Computers of all shapes and sizes would communicate in a way that prevents eavesdropping and allows for tamperproof message exchange, in theory giving birth to a new kind of freedom unlike anything we haveseen before. The change is happening now, at that very moment, all around the globe, right under your nose! Jon Callas' talk &lt;a href="https://www.youtube.com/watch?v=VLTGyYU52VQ"&gt;"The Revolution Will Be Encrypted"&lt;/a&gt; sums this up very welly. If you apply cryptography to modern communication tools, the result can be marvellous:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Cryptography erases distance. You can whisper in someone's ear who is a world away, choose to associate with whom you want to associate. And nobody in between is the wiser.&lt;/li&gt;
+&lt;li&gt;You can speak publicly. Everybody can make sure that the message relayed to them is unmodified.&lt;/li&gt;
+&lt;li&gt;You can speak privately. You can choose to not be on the record. You can create a space where you can be stupid, or be wrong, or assume a different identity, or develop new ideas.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Those three basic human rights, enabled by applied mathematics, offer enormous potential for a free and open society.&lt;/p&gt;
+
+&lt;p&gt;Investigative journalism is a good example here. Besides the legislative, executive and judicial branches of the government, journalism is an extra-governmental forcing function in the system of checks and balances. Investigative journalists have the power to rectify deficiencies. Their unique ability is to get insights in otherwise completely walled-off affairs. In order to do this, the ability to speak privately to your source is a life insurance. All too often in a very literal sense.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;But I have nothing to hide?!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;So, what if you really had nothing to hide? Really? Suffice to say that there are numerous studies out there to show how much of a misconception it is to assume that no harm will come to you because you are not interesting. Surveillance is a form of behavioral control. Because you will change your behavior if you know that you are under surveillance. Those two sources sum this up quite nicely:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://tehlug.org/files/solove.pdf"&gt;"'I've got nothing to hide' and other misunderstandings of privacy" by Daniel Solove&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://www.ted.com/talks/glenn_greenwald_why_privacy_matters"&gt;"Why privacy matters" by Glenn Greenwald&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id="thebad"&gt;The Bad&lt;/h1&gt;
+
+&lt;p&gt;Mass surveillance of electronic communication is a fact. We have had our suspicions for a long time, now we know for sure. Equally worrying are the reports about active corruption of cryptographic standards in order to promote weak or backdoored implementations. Only a small number of well-designed crypto protocols and their implementations in Open Source Software hold up under scrutiny. Among them is the &lt;strong&gt;PGP&lt;/strong&gt; standard for email encryption.&lt;/p&gt;
+
+&lt;p&gt;So while tools for effective protection from mass surveillance exist, they are mostly very hard to use due to bad user experience (UX). Let's look at how an encrypted conversation between Alice and Bob might start:&lt;/p&gt;
+
+&lt;p&gt;1) Alice has to invest time to seek out the appropriate tools. &lt;br&gt;
+2) Alice has to invest time and money to learn to use those new tools. &lt;br&gt;
+3) Alice has to invest time to convince her communication counterpart Bob to use those tools. &lt;br&gt;
+4) Bob has to invest time and money to learn to use those tools, too.&lt;/p&gt;
+
+&lt;p&gt;And they also have to invest time to deal with the overhead of encrypted communication, e.g. being restricted to certain devices.&lt;/p&gt;
+
+&lt;p&gt;Let's have a more detailed look at step 2 in the following section "Make your stuff usable for Alice" and step 4 in the section "Make your stuff usable for Bob".&lt;/p&gt;
+
+&lt;h2 id="makeyourstuffusableforalice"&gt;Make your stuff usable for Alice&lt;/h2&gt;
+
+&lt;p&gt;Your level of protection can only be as good as the weakest link in the chain. The design of cryptosystems in itself is hard enough, especially when they are attacked by an infinitely powerful adversary. But all too often, the &lt;a href="http://www.cs.berkeley.edu/~tygar/papers/Why_Johnny_Cant_Encrypt/USENIX.pdf"&gt;weakest&lt;/a&gt; &lt;a href="http://www.chariotsfire.com/pub/sheng-poster_abstract.pdf"&gt;link&lt;/a&gt; &lt;a href="http://www.academia.edu/3042410/Crying_Wolf_An_Empirical_Study_of_SSL_Warning_Effectiveness"&gt;is the&lt;/a&gt; &lt;a href="http://www.cl.cam.ac.uk/users/rja14/Papers/wcf.pdf"&gt;user&lt;/a&gt;, even if the crypto is solid.&lt;/p&gt;
+
+&lt;p&gt;In that case, the next best option is lowering the entry barrier. This is typically achieved by well-designed UI and UX. But how do you achieve a pleasant UX for crypto? The answer is painfully obvious: &lt;em&gt;Hide the crypto&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;During the past year of working on &lt;a href="https://mail.whiteout.io/"&gt;Whiteout Mail&lt;/a&gt;, I have come to understand that users don't want to be bothered with encryption. Cryptographic tools are typically designed by engineers. An engineer has a pretty good impression of what the program is supposed to do. They know what's happening behind the scenes. They want to be in control. They know about fingerprints and key lengths. They know the difference between a public key and a private key. They want to choose whether to send in PGP/MIME or PGP/INLINE, to encrypt and/or sign a message. They already know what to do. Now guess what would happen if someone took all that knowledge away and told them to use the very same tool again.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://blog.whiteout.io/content/images/2015/02/fa5.jpg" alt="I have no idea what I'm doing"&gt;&lt;/p&gt;
+
+&lt;p&gt;All of a sudden, all the options are overwhelming. There's no way of knowing what it could possibly mean. If a user is unsure about what you want from them, two things will happen:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;They will assume that they will probably do something wrong.&lt;/li&gt;
+&lt;li&gt;Out of fear of doing something wrong they will stop using your stuff altogether.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;If you look more closely, all of the complexity could have been substituted by safe defaults. &lt;a href="https://www.youtube.com/watch?v=is9luGFzqgA"&gt;In his SOUPS '14 keynote&lt;/a&gt; Christopher Soghoian explains why safe defaults are a really good idea when it comes to complexity. Why not use PGP/MIME by default? Why not generate 2k or 4k RSA keys by default? Why not hide signatures if they are valid and only show them if they are invalid? Or why not change use a nomenclature that explains what signatures actually represent, i.e. the message integrity? Most of those things reflect details of the underlying protocol. And the average user mostly does not care about that (and rightfully so).&lt;/p&gt;
+
+&lt;p&gt;Show the details if something goes wrong? &lt;em&gt;Absolutely&lt;/em&gt;. Show that something goes wrong and give the user the ability to dig deeper with optional error information.&lt;/p&gt;
+
+&lt;p&gt;Hide the details as long as everything is ok? &lt;em&gt;Absolutely&lt;/em&gt;. Leave the options to the pros, they'll know what to look for in the preferences.&lt;/p&gt;
+
+&lt;p&gt;So now you've finally managed to create a usable cryptosystem, at least for the Alice you had in mind when you developed it. &lt;/p&gt;
+
+&lt;p&gt;Now comes the hard part: Alice wants to put it to good use and communicate with Bob.&lt;/p&gt;
+
+&lt;h2 id="makeyourstuffusableforbob"&gt;Make your stuff usable for Bob&lt;/h2&gt;
+
+&lt;p&gt;This one is basically about empathy. While your users, i.e. Alice, have at least an idea that they want to use crypto, their communication partners, i.e. Bob, on the other hand are considerably harder to get on board. More likely than not Bob will not even know that he is using cryptography. Bob will be far less motivated to figure out the parts where you failed to guide him. Bob will not know what to do. Please listen to &lt;a href="https://media.ccc.de/browse/congress/2014/31c3_-_6154_-_en_-_saal_1_-_201412272300_-_crypto_tales_from_the_trenches_-_nadia_heninger_-_julia_angwin_-_laura_poitras_-_jack_gillum.html#video"&gt;what Poitras, Angwin et al. say about what happens when you make the Bobs of this world use crypto&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;When you lose Bob during the onboarding process, privacy gives way to convenience. Bob thinks he might as well send in plain text, because who would be interested in him anyway? What's the worst thing that might happen? Bob has no way of knowing that as soon as somebody pulls his communication logs, he is naked and his life is ripped wide open. Would you want the contents of your email account be open to everyone? Just ask &lt;a href="http://www.dailymail.co.uk/news/article-2382681/Colin-Powell-admits-sending-personal-emails-Romanian-diplomat-DENIES-having-affair-hacker-threatens-leak-intimate-messages.html"&gt;Colin Powell&lt;/a&gt;, &lt;a href="http://edition.cnn.com/2011/POLITICS/06/16/weiner.scandal/"&gt;Anthony Weiner&lt;/a&gt;, or &lt;a href="http://edition.cnn.com/2012/11/12/us/petraeus-cia-resignation/"&gt;David Petraeus&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;When you develop a cryptosystem, please have some empathy for Bob, i.e. the people on the other end of the line. Bob is the one that makes or breaks your cryptosystem!&lt;/strong&gt;&lt;/p&gt;</content:encoded></item></channel></rss>
